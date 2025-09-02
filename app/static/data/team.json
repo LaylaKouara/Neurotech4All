@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Dr. Mahnaz Arvaneh",
+    "role": "Principal Investagor",
+    "image": "images/Mahnaz-Arvaneh.png",
+    "linkedin": "https://www.linkedin.com/in/mahnaz-arvaneh-88a16536/",
+    "researchgate": "https://www.researchgate.net/profile/Mahnaz-Arvaneh-2",
+    "scholar": "https://scholar.google.com.sg/citations?user=HBxF7nAAAAAJ&hl=en"
+  },
+  {
+    "name": "Dr. Sabiniano Roman Regueros",
+    "role": "",
+    "image": "images/Sabiniano-Regueros.png",
+    "linkedin": "",
+    "researchgate": "https://www.researchgate.net/profile/Sabiniano-Roman",
+    "scholar": ""
+  },
+  {
+    "name": "Dr. Layla Kouara",
+    "role": "Postdoctoral Research Assistant",
+    "image": "images/layla-kouara.png",
+    "linkedin": "https://www.linkedin.com/in/layla-kouara/",
+    "researchgate": "https://www.researchgate.net/profile/Layla-Kouara",
+    "scholar": ""
+  },
+  {
+    "name": "Professor Oliver Bandmann",
+    "role": "",
+    "image": "images/default.png",
+    "linkedin": "",
+    "researchgate": "",
+    "scholar": ""
+  },
+  {
+    "name": "Lise Sproson",
+    "role": "",
+    "image": "images/Lise-Sproson.png",
+    "linkedin": "",
+    "researchgate": "",
+    "scholar": ""
+  },
+  {
+    "name": "Dr. Daniel Blackburn",
+    "role": "",
+    "image": "images/default.png",
+    "linkedin": "",
+    "researchgate": "",
+    "scholar": ""
+  },
+  {
+    "name": "Professor Hesam Olya",
+    "role": "",
+    "image": "images/default.png",
+    "linkedin": "",
+    "researchgate": "",
+    "scholar": ""
+  }
+]

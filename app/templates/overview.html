@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}About - Neurotech for All{% endblock %}
+{% block content %}
+
+
+  <!-- Hero Section -->
+  <section class="hero-section hero-alt text-center">
+    <div class="container">
+      <h2 class="fw-bold mb-3 animate">Making Neurotechnology Fairer and More Inclusive</h2>
+      <p class="lead text-muted animate">Exploring and addressing the barriers that prevent marginalised communities from fully benefiting from brain health technologies.</p>
+    </div>
+  </section>
+
+  <!-- About Content -->
+  <section class="py-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 mb-4 mb-md-0 pe-md-5">
+          <img src="{{ url_for('static', filename='images/application.jpg') }}" alt="About Neurotech" class="img-fluid rounded shadow-sm">
+        </div>
+        <div class="col-md-6">
+          <h3 class="fw-semibold mb-3">About</h3>
+          <p class="text-muted">This project explores how neurotechnologies can be developed and applied more equitably. It focuses on ensuring these technologies are inclusive, accessible, and responsive to the needs of diverse populations.</p>
+          <p class="text-muted">We aim to identify structural and technical barriers that may limit fair participation and access, and to support the design of approaches that address these limitations from the outset. Our work brings together different forms of evidence and perspectives to inform best practices across research, development, and implementation.</p>
+          <div class="mt-4">
+            <a href="{{ url_for('resources') }}" class="btn btn-outline-primary btn-sm btn-join">Explore Outputs</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Additional Content (flipped layout) -->
+  <section class="py-5 mt-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 order-md-2 mb-4 mb-md-0 ps-md-5">
+          <img src="{{ url_for('static', filename='images/ant.jpg') }}" alt="Community Engagement" class="img-fluid rounded shadow-sm">
+        </div>
+        <div class="col-md-6 order-md-1">
+          <h3 class="fw-semibold mb-3">Focus</h3>
+          <p class="text-muted">We are committed to understanding the broader social, cultural, and technical factors that influence the use and impact of neurotechnologies. Our research considers how to support more inclusive development processes and outcomes across the field.</p>
+          <p class="text-muted">By promoting collaboration between researchers, communities, and practitioners, we aim to contribute to a more reflective and responsible approach to innovation in brain-related technologies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section class="text-center py-5" style="background-color: #f8f9fa;">
+    <div class="container">
+      <h2 class="fw-bold mb-3">Get Involved</h2>
+      <div class="mx-auto" style="max-width: 700px;">
+        <p class="text-muted mb-4">
+          We’re working with communities, researchers, and healthcare professionals across the UK to shape a more inclusive future for neurotechnology. If you’re interested in contributing to this work please get in touch.
+        </p>
+      </div>
+      <a href="contact.html" class="btn btn-outline-primary btn-join">Contact Us</a>
+    </div>
+  </section>
+
+
+
+{% endblock %}

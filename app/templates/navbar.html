@@ -1,0 +1,49 @@
+<!-- Main Navigation Bar -->
+<nav class="navbar navbar-expand-lg bg-white shadow-sm py-3 sticky-top">
+  <div class="container-fluid">
+
+    <!-- Brand Logo and Name -->
+    <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="{{ url_for('index') }}" style="font-size: 1.25rem; letter-spacing: 0.5px;">
+      <img src="{{ url_for('static', filename='images/brain.png') }}" alt="Brain icon" style="height: 1.4rem; margin-right: 0.5rem; margin-left: 0.5rem;">
+      Neurotech4All
+    </a>
+
+    <!-- Mobile Menu Toggler -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible Navigation Links -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto fw-semibold" style="letter-spacing: 0.3px;">
+
+        <!-- Home Link -->
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('index') }}">Home</a>
+        </li>
+
+        <!-- About Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">About</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="{{ url_for('overview') }}">Overview</a></li>
+            <li><a class="dropdown-item" href="{{ url_for('team') }}">Team</a></li>
+            <li><a class="dropdown-item disabled-link" href="#" title='Coming Soon'>News</a></li>
+          </ul>
+        </li>
+
+        <!-- Resources Link -->
+        <li class="nav-item">
+          <a class="nav-link disabled-link" href="#" title='Coming Soon'>Resources</a>
+        </li>
+
+        <!-- Contact Link -->
+        <li class="nav-item">
+          <a class="nav-link" href="{{ url_for('contact') }}">Contact</a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>

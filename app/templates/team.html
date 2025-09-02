@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% block title %}Team - Neurotech for All{% endblock %}
+{% block content %}
+<!-- Team Section -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">Our Team</h2>
+      <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed ac velit sed sapien malesuada fermentum.</p>
+    </div>
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-5 g-4">
+      {% for member in members %}
+        <div class="col">
+          <div class="card theme-card h-100 border-0 bg-light position-relative overflow-hidden">
+            <div class="position-relative">
+              <img src="{{ url_for('static', filename=member.image) }}" class="card-img-top" alt="{{ member.name }}">
+              <div class="position-absolute bottom-0 end-0 m-2 d-flex gap-2 social-icons opacity-0">
+                {% if member.linkedin %}
+                  <a href="{{ member.linkedin }}" class="btn btn-sm btn-light rounded-circle shadow-sm" target="_blank">
+                    <i class="bi bi-linkedin text-primary"></i>
+                  </a>
+                {% endif %}
+                {% if member.researchgate %}
+                  <a href="{{ member.researchgate }}" class="btn btn-sm btn-light rounded-circle shadow-sm" target="_blank">
+                    <i class="fa-brands fa-researchgate text-primary"></i>
+                  </a>
+                {% endif %}
+                {% if member.scholar %}
+                  <a href="{{ member.scholar }}" class="btn btn-sm btn-light rounded-circle shadow-sm" target="_blank">
+                    <i class="fa-solid fa-graduation-cap text-primary"></i>
+                  </a>
+                {% endif %}
+              </div>
+            </div>
+            <div class="card-body text-start">
+              <h6 class="fw-semibold mb-0">{{ member.name }}</h6>
+              <p class="text-primary small mb-2">{{ member.role }}</p>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+
+
+  </div>
+</section>
+
+<style>
+  .theme-card {
+    transition: box-shadow 0.3s ease;
+  }
+  .theme-card:hover {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  }
+  .theme-card:hover .social-icons {
+    opacity: 1 !important;
+  }
+</style>
+
+
+{% endblock %}

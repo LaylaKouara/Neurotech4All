@@ -1,0 +1,254 @@
+{% extends 'base.html' %}
+{% block title %}Index - Neurotech for All{% endblock %}
+{% block content %}
+
+
+<!-- Hero Section -->
+<section id="home" class="hero-section d-flex align-items-center">
+  <div class="container py-5">
+    <div class="row align-items-center">
+      <div class="col-md-6 text-center text-md-start mb-4 mb-md-0">
+        <h1 class="display-4 fw-bold mb-4 animate">
+          Making Neurotechnology <span class="text-primary">Accessible to All</span>
+        </h1>
+        <p class="lead text-muted mb-4 animate">
+          Addressing inequities in neurotechnology design, research participation, and adoption for a more inclusive future.
+        </p>
+        <div class="d-grid gap-3 d-sm-flex justify-content-sm-start">
+          <a href="{{ url_for('overview') }}" class="btn btn-primary btn-lg animate">Learn More</a>
+          <a href="{{ url_for('contact') }}" class="btn btn-outline-primary btn-lg btn-join animate">Contact Us</a>
+        </div>
+      </div>
+      <div class="col-md-6 text-center">
+        <img
+          src="{{ url_for('static', filename='images/hero_img.jpg') }}"
+          class="img-fluid w-80 animate"
+          alt="EEG headset">
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- About Section -->
+<section id="about" class="about-section py-5 bg-white">
+  <div class="container">
+    <!-- Section Heading -->
+    <div class="text-center mb-5">
+      <h2 class="fw-bold mb-3">About</h2>
+      <div class="mx-auto" style="width: 100px; height: 4px; background-color: #2563eb;"></div>
+    </div>
+
+    <div class="row align-items-start">
+      <!-- Left Column: Text Content -->
+      <div class="col-lg-6 mb-5 mb-lg-0">
+        <h3 class="h4 fw-semibold mb-3">Our Mission</h3>
+        <p class="text-muted mb-4">
+          Neurotech for All explores how neurotechnology can be developed and implemented in ways that are fair, inclusive, and responsive to a wide range of people and contexts. The project focuses on identifying structural and technical factors that shape access and outcomes across different populations.
+        </p>
+        <p class="text-muted mb-4">
+          Our team brings together expertise across neuroscience, engineering, social science, and community-based research. We aim to inform how technologies are evaluated, tested, and applied so that they better reflect the diversity of those who may use them.
+        </p>
+        <div class="card-bg border-start border-4 border-primary ps-3 py-3 rounded">
+          <p class="fst-italic text-dark mb-0">
+            "We envision a future where neurotechnology is developed through approaches that recognise and respond to different experiences and needs."
+          </p>
+        </div>
+      </div>
+
+      <!-- Right Column: Feature Cards -->
+      <div class="col-lg-6">
+        <div class="row g-4">
+          <!-- Card 1 -->
+          <div class="col-sm-6">
+            <div class="card-bg p-4 rounded h-100">
+              <div class="mb-3">
+                <!-- Shield Icon -->
+                <i class="bi bi-shield-check" style="color: #2563eb; font-size: 2rem;"></i>
+              </div>
+              <h5 class="fw-semibold">Ethical Design</h5>
+              <p class="text-muted small mb-0">Exploring ways to support inclusive and responsible approaches to technology development.</p>
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="col-sm-6">
+            <div class="card-bg p-4 rounded h-100">
+              <div class="mb-3">
+                <!-- Community Icon -->
+                <i class="bi bi-people-fill" style="color: #2563eb; font-size: 2rem;"></i>
+              </div>
+              <h5 class="fw-semibold">Community Engagement</h5>
+              <p class="text-muted small mb-0">Working with communities to understand different perspectives and experiences of neurotechnology.</p>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="col-sm-6">
+            <div class="card-bg p-4 rounded h-100">
+              <div class="mb-3">
+                <!-- Search Icon -->
+                <i class="bi bi-search" style="color: #2563eb; font-size: 2rem;"></i>
+              </div>
+              <h5 class="fw-semibold">Innovative Research</h5>
+              <p class="text-muted small mb-0">Investigating how neurotechnologies perform across different user groups and contexts.</p>
+            </div>
+          </div>
+          <!-- Card 4 -->
+          <div class="col-sm-6">
+            <div class="card-bg p-4 rounded h-100">
+              <div class="mb-3">
+                <!-- Book Icon -->
+                <i class="bi bi-book" style="color: #2563eb; font-size: 2rem;"></i>
+              </div>
+              <h5 class="fw-semibold">Education & Training</h5>
+              <p class="text-muted small mb-0">Supporting shared learning through resources and collaborative activities.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Research Themes Section -->
+<section id="research" class="research-section py-5 bg-light">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold mb-3">Research Themes</h2>
+      <div class="mx-auto mb-3" style="width: 100px; height: 4px; background-color: #0d6efd;"></div>
+      <p class="text-muted mx-auto" style="max-width: 600px;">
+        Our work is organised around three key areas:
+      </p>
+    </div>
+
+    <div class="row g-4">
+      <!-- Theme Card 1 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card theme-card h-100 shadow-sm">
+          <div class="theme-card-top"></div>
+          <div class="card-body">
+            <h5 class="card-title fw-semibold">Bias in Design and Performance</h5>
+            <p class="card-text text-muted">Investigating how hardware and software design can lead to unequal performance across different demographic groups.</p>
+            <ul class="list-unstyled ps-3">
+              <li class="mb-2">
+                <i class="bi bi-check-circle-fill text-primary me-2"></i> Analysis of device calibration standards
+              </li>
+              <li class="mb-2">
+                <i class="bi bi-check-circle-fill text-primary me-2"></i> Evaluation of physiological and anatomical variability
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill text-primary me-2"></i> Computational modelling of performance differences
+              </li>
+            </ul>
+            <a href="{{ url_for('resources') }}" class="learn-more d-inline-flex align-items-center mt-2">
+              Learn more
+              <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme Card 2 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card theme-card h-100 shadow-sm">
+          <div class="theme-card-top"></div>
+          <div class="card-body">
+            <h5 class="card-title fw-semibold">Participation in Research</h5>
+            <p class="card-text text-muted">Understanding <i>why</i> some groups are underrepresented in neurotechnology research and exploring ways to address these gaps.</p>
+            <ul class="list-unstyled ps-3">
+              <li class="mb-2">
+                <i class="bi bi-check-circle-fill text-primary me-2"></i> Community-led interviews and focus groups
+              </li>
+              <li class="mb-2">
+                <i class="bi bi-check-circle-fill text-primary me-2"></i> Cultural and structural barriers to inclusion
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill text-primary me-2"></i> Development of inclusive research practices
+              </li>
+            </ul>
+            <a href="{{ url_for('resources') }}" class="learn-more d-inline-flex align-items-center mt-2">
+              Learn more
+              <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Theme Card 3 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card theme-card h-100 shadow-sm">
+          <div class="theme-card-top"></div>
+          <div class="card-body">
+            <h5 class="card-title fw-semibold">Use and Access Disparities</h5>
+            <p class="card-text text-muted">Exploring patterns of underutilisation in clinical settings and identifying systemic barriers to accessing neurotechnology.</p>
+            <ul class="list-unstyled ps-3">
+              <li class="mb-2">
+                <i class="bi bi-check-circle-fill text-primary me-2"></i> Review of health records and referral data
+              </li>
+              <li class="mb-2">
+                <i class="bi bi-check-circle-fill text-primary me-2"></i> Interviews with patients and clinicians
+              </li>
+              <li>
+                <i class="bi bi-check-circle-fill text-primary me-2"></i> Identification of social and institutional factors
+              </li>
+            </ul>
+            <a href="{{ url_for('resources') }}" class="learn-more d-inline-flex align-items-center mt-2">
+              Learn more
+              <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
+<!-- Collaborators Section -->
+<section id="collaborators" class="py-5 bg-white">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold mb-3">Our Collaborators</h2>
+      <div class="mx-auto mb-3" style="width: 100px; height: 4px; background-color: #2563eb;"></div>
+      <p class="text-muted mx-auto" style="max-width: 600px;">
+        <!-- Optional subtext -->
+      </p>
+    </div>
+
+    <!-- Logo Grid -->
+    <div class="row g-4 justify-content-center text-center">
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="collab-logo-card p-3 shadow-sm rounded">
+          <img src="https://www.parkinsons.org.uk/sites/default/files/2025-01/PUK_Logo_Strapline_RGB.png" alt="Parkinson's UK" class="img-fluid mx-auto d-block" style="max-height: 60px;">
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="collab-logo-card p-3 shadow-sm rounded">
+          <img src="https://www.hepp.ac.uk/wp-content/uploads/2022/11/UOSLogo_Primary_Violet_RGB.png" alt="University of Sheffield" class="img-fluid mx-auto d-block" style="max-height: 60px;">
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="collab-logo-card p-3 shadow-sm rounded">
+          <img src="https://hrc-longterm.nihr.ac.uk/storage/app/uploads/public/67b/317/17e/67b31717edd84848054541.svg" alt="NIHR" class="img-fluid mx-auto d-block" style="max-height: 60px;">
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="collab-logo-card p-3 shadow-sm rounded">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqwY9Nl-zOFRjIIV4qVYfy6TYhAQHZvNH_yQ&s" alt="ISRAAC" class="img-fluid mx-auto d-block" style="max-height: 60px;">
+        </div>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <div class="collab-logo-card p-3 shadow-sm rounded">
+          <img src="https://app-aria-cd-prod.azurewebsites.net/media/hsxblxrf/logo-aria-black.svg" alt="ARIA" class="img-fluid mx-auto d-block" style="max-height: 60px;">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+{% endblock %}
