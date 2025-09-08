@@ -2,17 +2,12 @@
 import os
 import json
 import random
-<<<<<<< Updated upstream
 from flask import Flask, render_template, request, abort, url_for
 from pathlib import Path
 import re, yaml
 from dateutil import parser as dateparser
 import markdown as md
 
-=======
-from flask import Flask, render_template, request, abort
-from app.posts import *
->>>>>>> Stashed changes
 
 app = Flask(__name__)
 app.config['FREEZER_MODE'] = False  # development default
@@ -37,16 +32,6 @@ def team():
 def resources():
     return render_template('resources.html')
 
-<<<<<<< Updated upstream
-=======
-@app.route('/news.html')
-def news():
-    news_path = os.path.join(app.root_path, 'static', 'data', 'news.json')
-    with open(news_path) as f:
-        news_items = json.load(f)
-    return render_template('news.html', news_items=news_items)
-
->>>>>>> Stashed changes
 @app.route('/contact.html')
 def contact():
     return render_template('contact.html')
