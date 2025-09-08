@@ -2,6 +2,7 @@
 import os
 import json
 import random
+<<<<<<< HEAD
 from flask import Flask, render_template, request, abort, url_for
 from pathlib import Path
 import re, yaml
@@ -12,6 +13,8 @@ import markdown as md
 from flask import Flask, render_template, request, abort
 from app.posts import *
 =======
+=======
+>>>>>>> parent of da7984f (Added News Templates)
 from flask import Flask, render_template, request, abort
 
 app = Flask(__name__)
@@ -38,8 +41,11 @@ def resources():
     return render_template('resources.html')
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> parent of da7984f (Added News Templates)
 =======
 >>>>>>> parent of da7984f (Added News Templates)
 @app.route('/news.html')
@@ -50,7 +56,11 @@ def news():
     return render_template('news.html', news_items=news_items)
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+
+>>>>>>> parent of da7984f (Added News Templates)
 =======
 
 >>>>>>> parent of da7984f (Added News Templates)
