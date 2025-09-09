@@ -9,6 +9,8 @@ app.config['FREEZER_MODE'] = True  # Enable frozen mode when freezing
 app.config['FREEZER_RELATIVE_URLS'] = True
 app.config['FREEZER_DESTINATION'] = str(output_dir)
 
+#  public URL
+app.config['SITE_ORIGIN'] = "https://neurotech4all.com"
 
 freezer = Freezer(app)
 

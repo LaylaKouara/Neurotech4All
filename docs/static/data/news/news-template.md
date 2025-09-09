@@ -7,7 +7,7 @@ reading_time: 6                          # minutes (optional)
 tags: [Neurotech, Inclusion]
 
 hero:
-  src: "images/post-hero.jpg"           # path under /static/
+  src: "images/hero_img.jpg"           # path under /static/
   alt: "Descriptive alt text"
   caption: "Short caption describing the image."
 
@@ -28,7 +28,11 @@ Explain the context, motivation, or problem being addressed. You can **bold** ke
 
 > “A short quote or participant voice can make the content feel grounded.”
 >
-> — Attribution or context
+> - Attribution or context
+
+
+![Adding Images](data/news/images/hero_img.jpg){:.img-fluid .rounded}
+
 
 ### What this means
 Conclude with practical implications and link to [link](/link/).

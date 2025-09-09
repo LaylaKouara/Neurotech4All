@@ -58,11 +58,31 @@
     <hr class="my-4">
     <div class="d-flex align-items-center gap-3">
       <span class="text-muted">Share:</span>
-      {% set share = permalink or request.url %}
-      <a class="btn btn-sm btn-outline-secondary" href="https://twitter.com/intent/tweet?url={{ share|urlencode }}" aria-label="Share on X"><i class="fa-brands fa-x-twitter"></i></a>
-      <a class="btn btn-sm btn-outline-secondary" href="https://www.linkedin.com/sharing/share-offsite/?url={{ share|urlencode }}" aria-label="Share on LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-      <a class="btn btn-sm btn-outline-secondary" href="mailto:?subject={{ title|urlencode }}&body={{ share|urlencode }}" aria-label="Share via email"><i class="fa-solid fa-envelope"></i></a>
+      {# absolute, public URL to this post #}
+      {% set share_url = canonical %}
+      {# teaser text for X/email; keep it short #}
+      {% set share_text = (title ~ ' - ' ~ (teaser or ''))[:240] %}
+
+      <a class="btn btn-sm btn-outline-secondary"
+         href="https://twitter.com/intent/tweet?url={{ share_url|urlencode }}&text={{ share_text|urlencode }}"
+         aria-label="Share on X">
+         <i class="fa-brands fa-x-twitter"></i>
+      </a>
+
+      <a class="btn btn-sm btn-outline-secondary"
+         href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url|urlencode }}"
+         target="_blank" rel="noopener"
+         aria-label="Share on LinkedIn">
+        <i class="fa-brands fa-linkedin-in"></i>
+      </a>
+
+      <a class="btn btn-sm btn-outline-secondary"
+         href="mailto:?subject={{ title|urlencode }}&body={{ (teaser ~ '\n\n' ~ share_url)|urlencode }}"
+         aria-label="Share via email">
+         <i class="fa-solid fa-envelope"></i>
+      </a>
     </div>
+
 
     {% if references %}
     <section id="references" class="refs-section mt-4">
@@ -88,11 +108,6 @@
       </div>
     </section>
     {% endif %}
-
-    <nav class="post-pager d-flex justify-content-between align-items-center mt-4">
-      {% if prev is defined and prev %}<a class="btn btn-outline-primary" href="{{ prev.url|relurl }}"><i class="bi bi-arrow-left"></i> {{ prev.title }}</a>{% else %}<span></span>{% endif %}
-      {% if next is defined and next %}<a class="btn btn-outline-primary" href="{{ next.url|relurl }}">{{ next.title }} <i class="bi bi-arrow-right"></i></a>{% endif %}
-    </nav>
 
     <div class="text-center mt-5">
       <a class="read-more" href="{{ url_for('news') }}"><i class="bi bi-arrow-left"></i> Back to all News</a>

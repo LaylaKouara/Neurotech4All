@@ -172,9 +172,8 @@ def news():
     return render_template("news_contents.html", news_items=items)
 
 # ------------------ SINGLE POST PAGE ------------------
-@app.route('/news/<slug>.html')
+@app.route("/news/<slug>.html")
 def news_post(slug):
-    """Render a single news post from /static/data/news/**/<slug>.md."""
     path = next((p for p in _iter_md_paths() if p.stem == slug), None)
     if not path:
         abort(404)
@@ -187,14 +186,22 @@ def news_post(slug):
         extensions=["fenced_code", "tables", "attr_list", "smarty", "toc"]
     )
 
+    # Canonical URL: front-matter permalink if present, else SITE_ORIGIN + page path
+    if meta.get("permalink"):
+        canonical = meta["permalink"].strip()
+    else:
+        rel_path = url_for("news_post", slug=slug).lstrip("/")  # e.g., news/my-post.html
+        origin = (app.config.get("SITE_ORIGIN") or request.url_root).rstrip("/")
+        canonical = f"{origin}/{rel_path}"
+
     return render_template(
         "news_post.html",
         slug=slug,
         body_html=body_html,
         date_str=date_str,
-        **meta,  # includes title, author, teaser, tags, hero, references, etc.
+        canonical=canonical,  # 👈 add this
+        **meta,
     )
-
 
 if __name__ == '__main__':
     app.run(debug=True)
