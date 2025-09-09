@@ -30,8 +30,7 @@ Explain the context, motivation, or problem being addressed. You can **bold** ke
 >
 > - Attribution or context
 
-
-![Adding Images](data/news/images/hero_img.jpg){:.img-fluid .rounded}
+![Adding Images](Neurotech4all/static/data/news/images/hero_img.jpg)
 
 
 ### What this means
