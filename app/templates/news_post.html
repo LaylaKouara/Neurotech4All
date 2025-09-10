@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block title %}{{ title }} – News – Neurotech for All{% endblock %}
+{% block content %}
+
+<!-- Breadcrumb -->
+<div class="container">
+  <nav aria-label="breadcrumb" class="py-3">
+    <ol class="breadcrumb mb-0">
+      <li class="breadcrumb-item"><a href="{{ url_for('news') }}">News</a></li>
+      <li class="breadcrumb-item active" aria-current="page">{{ title }}</li>
+    </ol>
+  </nav>
+</div>
+
+<!-- Article Header -->
+<header class="post-header py-4">
+  <div class="container">
+    <h1 class="post-title fw-bold mb-3">{{ title }}</h1>
+
+    <div class="post-meta text-muted d-flex flex-wrap align-items-center gap-3">
+      {% if author %}<span><i class="bi bi-person"></i> {{ author }}</span>{% endif %}
+      {% if date_str %}<span><i class="bi bi-calendar3"></i> {{ date_str }}</span>{% endif %}
+      {% if reading_time %}<span><i class="bi bi-clock"></i> {{ reading_time }} min read</span>{% endif %}
+      {% if tags %}
+        <span class="d-flex align-items-center gap-2">
+          <i class="bi bi-tags"></i>
+          {% for tag in tags %}
+            <span class="badge bg-light text-dark">{{ tag }}</span>
+          {% endfor %}
+        </span>
+      {% endif %}
+    </div>
+  </div>
+</header>
+
+<!-- Hero Image -->
+{% if hero and hero.src %}
+<section class="post-hero">
+  <div class="container">
+    <figure class="figure">
+      <img src="{{ hero.src|asset }}" class="figure-img img-fluid rounded" alt="{{ hero.alt or title }}">
+      {% if hero.caption %}
+        <figcaption class="figure-caption text-muted">{{ hero.caption }}</figcaption>
+      {% endif %}
+    </figure>
+  </div>
+</section>
+{% endif %}
+
+<!-- Article Body (HTML converted from Markdown) -->
+<article class="post-content py-3">
+  <div class="container">
+    {% if teaser %}<p class="lead">{{ teaser }}</p>{% endif %}
+
+    {{ body_html|safe }}
+
+    <!-- Share Row -->
+    <hr class="my-4">
+    <div class="d-flex align-items-center gap-3">
+      <span class="text-muted">Share:</span>
+      {# absolute, public URL to this post #}
+      {% set share_url = canonical %}
+      {# teaser text for X/email; keep it short #}
+      {% set share_text = (title ~ ' - ' ~ (teaser or ''))[:240] %}
+
+      <a class="btn btn-sm btn-outline-secondary"
+         href="https://twitter.com/intent/tweet?url={{ share_url|urlencode }}&text={{ share_text|urlencode }}"
+         aria-label="Share on X">
+         <i class="fa-brands fa-x-twitter"></i>
+      </a>
+
+      <a class="btn btn-sm btn-outline-secondary"
+         href="https://www.linkedin.com/sharing/share-offsite/?url={{ share_url|urlencode }}"
+         target="_blank" rel="noopener"
+         aria-label="Share on LinkedIn">
+        <i class="fa-brands fa-linkedin-in"></i>
+      </a>
+
+      <a class="btn btn-sm btn-outline-secondary"
+         href="mailto:?subject={{ title|urlencode }}&body={{ (teaser ~ '\n\n' ~ share_url)|urlencode }}"
+         aria-label="Share via email">
+         <i class="fa-solid fa-envelope"></i>
+      </a>
+    </div>
+
+
+    {% if references %}
+    <section id="references" class="refs-section mt-4">
+      <div class="refs-card">
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <h2 class="refs-title">References</h2>
+          <span class="refs-count">{{ references|length }}</span>
+        </div>
+        <ol class="refs-list">
+          {% for ref in references %}
+          <li class="refs-item">
+            <span class="refs-entry">
+              {% if ref.authors %}{{ ref.authors }}{% endif %}
+              {% if ref.year %} ({{ ref.year }}){% endif %}.
+              {% if ref.title %}<em>{{ ref.title }}</em>.{% endif %}
+              {% if ref.source %} {{ ref.source }}.{% endif %}
+              {% if ref.doi %} <a href="https://doi.org/{{ ref.doi }}" rel="noopener">doi:{{ ref.doi }}</a>.{% endif %}
+              {% if ref.url %} <a href="{{ ref.url }}" rel="noopener">Link</a>.{% endif %}
+            </span>
+          </li>
+          {% endfor %}
+        </ol>
+      </div>
+    </section>
+    {% endif %}
+
+    <div class="text-center mt-5">
+      <a class="read-more" href="{{ url_for('news') }}"><i class="bi bi-arrow-left"></i> Back to all News</a>
+    </div>
+  </div>
+</article>
+
+{% endblock %}

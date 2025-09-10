@@ -333,7 +333,7 @@ a.learn-more:hover {
   }
 }
 
-/* ===== Subtle, modern References ===== */
+/* ===== References ===== */
 .refs-card {
   background: #f9fafb;
   border: 1px solid #edf0f3;
@@ -404,4 +404,32 @@ a.learn-more:hover {
   pointer-events: none;       /* stop clicks */
   cursor: not-allowed;        /* show disabled cursor */
   opacity: 0.6;               /* faded look */
+}
+
+/* ===== News Post Pages ===== */
+/* POST PAGE - keep the hero image modest on wide screens */
+.post-hero .figure {
+  /* Limit the content width and center it */
+  max-width: clamp(520px, 70vw, 900px);
+  margin: 0 auto;
+}
+
+.post-hero .figure-img {
+  width: 100%;
+  height: auto; /* never stretch */
+}
+
+/* Optional: make it even smaller on very large desktops */
+@media (min-width: 1400px) {
+  .post-hero .figure {
+    max-width: 720px;
+  }
+}
+
+/* 2) NEWS INDEX CARDS — prevent super-tall thumbnails on big screens */
+.news-card .card-img-top {
+  width: 100%;
+  height: clamp(160px, 18vw, 240px); /* scales with viewport, capped */
+  object-fit: cover;                 /* crop to fill nicely */
+  object-position: center;
 }

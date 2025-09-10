@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}News – Neurotech for All{% endblock %}
+{% block content %}
+<section class="news-section">
+  <div class="container">
+    <h5>Neurotech for All</h5>
+    <h2>Latest News</h2>
+    <div class="divider"></div>
+
+    <div class="row g-4 mt-4">
+      {% for item in news_items %}
+        {# Build a link that is relative in frozen mode #}
+        {% set href = url_for('news_post', slug=item.slug)|relurl %}
+
+        <div class="col-md-6 col-lg-4">
+          <div class="card news-card h-100">
+            {% if item.hero_src %}
+              <a href="{{ href }}" class="stretched-link" aria-label="Read {{ item.title }}">
+                <img src="{{ item.hero_src|asset }}" class="card-img-top" alt="{{ item.hero_alt or item.title }}">
+              </a>
+            {% endif %}
+            <div class="card-body">
+              <h6 class="card-title">
+                <a href="{{ href }}" class="text-decoration-none">{{ item.title }}</a>
+              </h6>
+              <div class="card-meta mb-2">
+                {{ item.date_str }}{% if item.author %} / {{ item.author }}{% endif %}
+              </div>
+              <p class="card-text">{{ item.teaser }}</p>
+              <a href="{{ href }}" class="read-more">Read More</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
