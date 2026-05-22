@@ -84,11 +84,8 @@ def asset_url(p: str) -> str:
         p = p[7:]
 
     if app.config.get("FREEZER_MODE"):
-        # How many directory levels deep is the current page?
-        # E.g. /news/my-post.html has depth 1, so we need "../" once.
-        depth = request.path.strip("/").count("/")
-        prefix = "../" * depth
-        return f"{prefix}static/{p}"
+        # Root-relative paths work on any web server (GitHub Pages, custom domain).
+        return f"/static/{p}"
 
     return url_for("static", filename=p)
 
@@ -113,9 +110,8 @@ def relurl(p: str) -> str:
         s = s[1:]
 
     if app.config.get("FREEZER_MODE"):
-        depth = request.path.strip("/").count("/")
-        prefix = "../" * depth
-        return f"{prefix}{s}"
+        # Root-relative links work on any web server.
+        return f"/{s}" if not s.startswith("/") else s
 
     return p
 
