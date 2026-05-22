@@ -1,0 +1,78 @@
+{# base.html
+   Master layout inherited by all pages.
+   Provides <head>, shared CSS/font links, navbar, footer, and common JS.
+   Child templates override the `content` block and can add to `extra_head`.
+#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    {# Page title: child template sets `page_title`, fallback to site name #}
+    <title>{% block page_title %}{{ config.site.name }}{% endblock %} – {{ config.site.name }}</title>
+
+    {# Canonical URL (set by news_post route, optional elsewhere) #}
+    {% if canonical is defined %}<link rel="canonical" href="{{ canonical }}">{% endif %}
+
+    {# Favicon #}
+    <link rel="icon" type="image/png" href="{{ 'images/brain.png' | asset }}">
+
+    {# Google Fonts: Plus Jakarta Sans #}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    {# Font Awesome icons #}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    {# Main stylesheet #}
+    <link rel="stylesheet" href="{{ 'css/main.css' | asset }}">
+
+    {# Optional extra head content from child templates (e.g. page-specific CSS) #}
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+{# ── NAVIGATION ── included from _navbar.html partial #}
+{% include '_navbar.html' %}
+
+{# ── PAGE CONTENT ── each template fills this block #}
+{% block content %}{% endblock %}
+
+{# ── FOOTER ── included from _footer.html partial #}
+{% include '_footer.html' %}
+
+{# ── SHARED JAVASCRIPT ── sticky nav scroll class + mobile hamburger #}
+<script>
+    /* Sticky nav: add .scrolled class when user scrolls past 50px */
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+        nav.classList.toggle('scrolled', window.scrollY > 50);
+    }, { passive: true });
+
+    /* Mobile hamburger: toggle .open on both the nav links and the button */
+    const toggle = document.getElementById('nav-toggle');
+    const links  = document.getElementById('nav-links');
+    toggle.addEventListener('click', () => {
+        links.classList.toggle('open');
+        toggle.classList.toggle('open');
+    });
+    /* Close mobile nav when any link is clicked */
+    links.querySelectorAll('.nav-link').forEach(l => l.addEventListener('click', () => {
+        links.classList.remove('open');
+        toggle.classList.remove('open');
+    }));
+
+    /* Scroll-in animations using IntersectionObserver */
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.fi').forEach(el => io.observe(el));
+</script>
+
+{# Optional extra scripts from child templates #}
+{% block extra_scripts %}{% endblock %}
+
+</body>
+</html>

@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Flask instance folder (local config, SQLite DBs)
+instance/
+*.sqlite
+*.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Editor and OS
+.DS_Store
+Thumbs.db
+*.log
+.idea/
+.vscode/
+
+# Test / coverage artifacts
+.pytest_cache/
+.coverage
+htmlcov/
+

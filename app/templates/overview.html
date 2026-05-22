@@ -1,0 +1,337 @@
+{# overview.html
+   About / Project Overview page.
+   Static content (the research content does not come from a data file).
+   Features a sticky sidebar TOC (desktop only) and section-level anchors.
+   In-text citations link down to the reference list; each reference has a
+   back-arrow link that returns to the citation in the text.
+#}
+{% extends 'base.html' %}
+
+{% block page_title %}Project Overview{% endblock %}
+
+{% block extra_head %}
+<style>
+    /* Overview-specific layout and TOC styles */
+    .ov-wrap { padding: 72px 0 120px; }
+    .ov-layout { display: grid; grid-template-columns: 240px 1fr; gap: 56px; align-items: start; }
+    .ov-toc { position: sticky; top: 92px; }
+    .ov-toc-card { background: var(--blue-bg); border: 1px solid var(--border); border-radius: var(--r); padding: 24px; }
+    .ov-toc-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-bottom: 16px; }
+    .ov-toc-list { display: flex; flex-direction: column; gap: 2px; }
+    .ov-toc-link { font-size: .86rem; font-weight: 600; color: var(--muted); padding: 8px 12px; border-radius: 10px; transition: var(--t); display: flex; align-items: center; gap: 9px; }
+    .ov-toc-link:hover, .ov-toc-link.active { color: var(--blue); background: #fff; }
+    .ov-toc-link i { font-size: .75rem; opacity: .7; width: 14px; }
+    .ov-toc-divider { height: 1px; background: var(--border); margin: 10px 0; }
+    .ov-section { margin-bottom: 72px; }
+    .ov-section:last-child { margin-bottom: 0; }
+    /* scroll-margin-top so TOC anchors land with section title at the top */
+    section[id] { scroll-margin-top: 90px; }
+    .ov-kicker { font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .1em; color: var(--blue); margin-bottom: 8px; }
+    .ov-heading { font-size: clamp(1.5rem,3vw,2rem); font-weight: 800; color: var(--navy); line-height: 1.2; letter-spacing: -.02em; margin-bottom: 12px; }
+    .ov-divider { height: 3px; width: 48px; background: linear-gradient(to right, var(--blue), var(--blue-lt)); border-radius: 2px; margin-bottom: 28px; }
+    .ov-lead { font-size: 1.05rem; color: var(--text); line-height: 1.85; margin-bottom: 20px; }
+    .ov-lead a { color: var(--blue); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+    .ov-lead a:hover { color: var(--navy); }
+    .ov-objectives { display: flex; flex-direction: column; gap: 12px; margin: 24px 0 32px; }
+    .ov-obj-item { display: flex; align-items: flex-start; gap: 14px; background: var(--blue-bg); border: 1px solid var(--border); border-radius: 14px; padding: 16px 18px; }
+    .ov-obj-icon { width: 32px; height: 32px; border-radius: 9px; background: var(--blue-pale); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .ov-obj-icon i { color: var(--blue); font-size: .85rem; }
+    .ov-obj-text { font-size: .93rem; color: var(--text); line-height: 1.65; }
+    .ov-obj-text a { color: var(--blue); font-weight: 600; }
+    .ov-video-wrap { border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-md); margin-bottom: 16px; }
+    .ov-video-wrap iframe { display: block; width: 100%; height: auto; aspect-ratio: 16/9; }
+    .ov-video-meta { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+    .ov-badge { display: inline-flex; align-items: center; gap: 6px; background: var(--navy); color: #fff; font-size: .75rem; font-weight: 700; padding: 5px 12px; border-radius: 100px; }
+    .ov-video-credit { font-size: .83rem; color: var(--muted); }
+    .ov-video-credit a { color: var(--blue); font-weight: 600; }
+    .wp-card { border: 1px solid var(--border); border-radius: var(--r-lg); overflow: hidden; box-shadow: var(--shadow-sm); background: #fff; }
+    .wp-img { width: 100%; height: 280px; object-fit: cover; display: block; }
+    .wp-img-placeholder { width: 100%; height: 280px; background: linear-gradient(135deg, var(--blue-pale), var(--blue-bg)); display: flex; align-items: center; justify-content: center; }
+    .wp-img-placeholder i { font-size: 3rem; color: var(--blue-lt); }
+    .wp-body { padding: 36px 40px 40px; }
+    .wp-heading { font-size: 1.35rem; font-weight: 800; color: var(--navy); margin-bottom: 20px; line-height: 1.3; }
+    .wp-text { font-size: .97rem; color: var(--text); line-height: 1.85; margin-bottom: 16px; }
+    .wp-text sup a { color: var(--blue); font-size: .7em; font-weight: 700; }
+    .wp-activities { display: flex; flex-direction: column; gap: 8px; margin: 20px 0 24px; padding: 20px 24px; background: var(--blue-bg); border-radius: 14px; border: 1px solid var(--border); }
+    .wp-activities-label { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .09em; color: var(--muted); margin-bottom: 12px; }
+    .wp-activity { display: flex; align-items: flex-start; gap: 11px; font-size: .9rem; color: var(--text); line-height: 1.6; }
+    .wp-activity i { color: var(--blue); margin-top: 3px; flex-shrink: 0; font-size: .85rem; }
+    .wp-outcome p { font-size: .92rem; color: var(--text); line-height: 1.75; margin-bottom: 10px; }
+    .wp-outcome strong { color: var(--navy); }
+    .ov-refs { background: var(--blue-bg); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 36px 40px; margin-bottom: 48px; }
+    .ov-refs-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 24px; }
+    .ov-refs-title { font-size: 1.1rem; font-weight: 800; color: var(--navy); }
+    .ov-refs-count { font-size: .78rem; font-weight: 700; background: var(--blue-pale); color: var(--blue); padding: 4px 12px; border-radius: 100px; }
+    .ov-refs-list { display: flex; flex-direction: column; gap: 12px; }
+    .ov-ref-item { display: flex; gap: 14px; font-size: .86rem; color: var(--muted); line-height: 1.7; }
+    .ov-ref-num { font-size: .78rem; font-weight: 700; color: var(--blue); background: var(--blue-pale); width: 24px; height: 24px; border-radius: 6px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+    .ov-ref-entry em { font-style: italic; }
+    .ov-ref-entry a { color: var(--blue); font-weight: 600; }
+    .back-top { text-align: right; margin: 32px 0; padding-top: 24px; border-top: 1px solid var(--border); }
+    .back-top a { font-size: .85rem; font-weight: 700; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; transition: var(--t); }
+    .back-top a:hover { color: var(--blue); }
+    @media (max-width: 1024px) { .ov-layout { grid-template-columns: 1fr; } .ov-toc { display: none; } }
+    @media (max-width: 768px) { .ov-wrap { padding: 48px 0 80px; } .wp-body { padding: 24px; } .wp-img { height: 200px; } .ov-refs { padding: 24px; } }
+</style>
+{% endblock %}
+
+{% block content %}
+
+{# ── PAGE HERO ────────────────────────────────────────────────────────────── #}
+<div class="page-hero" style="margin-top:64px">
+    <div class="container">
+        <div class="chip"><i class="fas fa-brain"></i> Project Overview</div>
+        <h1>Making Neurotechnology<br><span style="color:var(--blue)">Accessible to All</span></h1>
+        <p>Addressing inequities and adoption disparities in neurotechnology among marginalised groups.</p>
+    </div>
+</div>
+
+{# ── MAIN LAYOUT: sticky TOC + content column ─────────────────────────────── #}
+<main class="ov-wrap" id="top">
+    <div class="container">
+        <div class="ov-layout">
+
+            {# ── STICKY TOC (hidden on mobile via CSS) ── #}
+            <aside class="ov-toc">
+                <div class="ov-toc-card">
+                    <div class="ov-toc-label">On this page</div>
+                    <nav class="ov-toc-list">
+                        <a href="#intro" class="ov-toc-link"><i class="fas fa-file-alt"></i> Introduction</a>
+                        <a href="#video" class="ov-toc-link"><i class="fas fa-play-circle"></i> Watch the video</a>
+                        <div class="ov-toc-divider"></div>
+                        <a href="#wp2"   class="ov-toc-link"><i class="fas fa-microscope"></i> Calibration &amp; Design</a>
+                        <a href="#wp3"   class="ov-toc-link"><i class="fas fa-users"></i> Inclusive Participation</a>
+                        <a href="#wp4"   class="ov-toc-link"><i class="fas fa-universal-access"></i> Equitable Access</a>
+                        <div class="ov-toc-divider"></div>
+                        <a href="#refs"  class="ov-toc-link"><i class="fas fa-book"></i> References</a>
+                    </nav>
+                </div>
+            </aside>
+
+            {# ── CONTENT COLUMN ── #}
+            <div>
+
+                {# ── INTRODUCTION ── #}
+                <section class="ov-section fi" id="intro">
+                    <div class="ov-kicker">The Project</div>
+                    <h2 class="ov-heading">What We're Doing and Why</h2>
+                    <div class="ov-divider"></div>
+                    <p class="ov-lead">
+                        This project aims to promote the equitable development and adoption of neurotechnologies by identifying and addressing biases, barriers, and disparities in their design, performance, and utilisation among marginalised groups.
+                    </p>
+                    <p class="ov-lead">
+                        By employing user-centred approaches and community-based research that integrate both qualitative and quantitative analyses, we are working toward four core objectives:
+                    </p>
+                    <div class="ov-objectives">
+                        <div class="ov-obj-item">
+                            <div class="ov-obj-icon"><i class="fas fa-search"></i></div>
+                            <div class="ov-obj-text"><a href="#wp2">Identify biases</a> and inequities in the design and performance of neurotechnologies.</div>
+                        </div>
+                        <div class="ov-obj-item">
+                            <div class="ov-obj-icon"><i class="fas fa-users"></i></div>
+                            <div class="ov-obj-text">Understand <a href="#wp3">barriers to the participation</a> of minority ethnic groups in neuroscience and neurotechnology research.</div>
+                        </div>
+                        <div class="ov-obj-item">
+                            <div class="ov-obj-icon"><i class="fas fa-chart-bar"></i></div>
+                            <div class="ov-obj-text">Investigate racial and gender disparity in the <a href="#wp4">utilisation of neurotechnologies</a>.</div>
+                        </div>
+                        <div class="ov-obj-item">
+                            <div class="ov-obj-icon"><i class="fas fa-lightbulb"></i></div>
+                            <div class="ov-obj-text">Co-develop practical solutions, guidelines, and recommendations to address these challenges.</div>
+                        </div>
+                    </div>
+                </section>
+
+                {# ── VIDEO ── #}
+                <section class="ov-section fi" id="video">
+                    <div class="ov-kicker">Watch</div>
+                    <h2 class="ov-heading">A Background to our Project</h2>
+                    <div class="ov-divider"></div>
+                    <div class="ov-video-wrap">
+                        <iframe src="https://www.youtube.com/embed/Mp6FU8QgzK0?si=m5-oOx9xKVpl7KBu"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="ov-video-meta">
+                        <span class="ov-badge"><i class="fas fa-clock"></i> 7:46 min</span>
+                        <span class="ov-video-credit">Film by <a href="https://www.brettinthecity.com/" target="_blank" rel="noopener">Brett Chapman</a>, 2025.</span>
+                    </div>
+                </section>
+
+                {# ── WP2: Calibration and Design Biases ── #}
+                <section class="ov-section fi" id="wp2">
+                    <h2 class="ov-heading">Calibration and Design Biases</h2>
+                    <div class="ov-divider"></div>
+                    <div class="wp-card">
+                        <img src="{{ 'images/wp2-calibration-biases.jpg' | asset }}" alt="Calibration and design" class="wp-img"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="wp-img-placeholder" style="display:none"><i class="fas fa-brain"></i></div>
+                        <div class="wp-body">
+                            <p class="wp-text">
+                                Neurotechnology biases refer to systematic discrepancies that result in unequal outcomes or access for different demographic groups. Calibration and design biases are prominent, with technologies like fNIRS<sup><a href="#ref-1" id="cite-1">[1]</a></sup> and EEG<sup><a href="#ref-2" id="cite-2">[2]</a></sup> often not calibrated for diverse skin tones and hair types, leading to inaccurate readings and poor performance for people with darker skin or thick, coarse hair.
+                            </p>
+                            <p class="wp-text">
+                                Additionally, variations in bone density, skull shape and thickness across different ethnic groups and genders can impact the effectiveness of neurotechnologies<sup><a href="#ref-3" id="cite-3">[3]</a></sup> including focused ultrasound neurostimulation and transcranial magnetic stimulation (TMS) if not calibrated appropriately.
+                            </p>
+                            <p class="wp-text">
+                                We will identify biases and performance discrepancies across current and emerging neurotechnologies by combining expert interviews and analysis of existing datasets. The focus is on how inadequate design and calibration of software and hardware can disadvantage users with different skin tones, skull anatomies, bone densities, hairstyles, and genetic or hormonal profiles.
+                            </p>
+                            <p class="wp-text">
+                                The emerging technologies examined will span electrical, optical, acoustic, chemical, thermal, and magnetic methods for recording and/or stimulating brain activity, both invasive and non-invasive. Findings will feed into practical recommendations so these systems are accessible and effective for all users.
+                            </p>
+                            <div class="wp-activities">
+                                <div class="wp-activities-label">Key objectives</div>
+                                <div class="wp-activity"><i class="fas fa-check-circle"></i> Map known biases and performance gaps</div>
+                                <div class="wp-activity"><i class="fas fa-check-circle"></i> Quantify anatomical and tissue variability across groups using existing datasets</div>
+                                <div class="wp-activity"><i class="fas fa-check-circle"></i> Estimate performance loss from non-calibrated use in FUS, tDCS and related modalities</div>
+                                <div class="wp-activity"><i class="fas fa-check-circle"></i> Compare calibration strategies for software and hardware across skin tones, hair types, and skull properties</div>
+                            </div>
+                            <div class="wp-outcome">
+                                <p><strong>Outputs.</strong> Evidence map of biases, annotated parameter ranges for anatomy and tissue, modelling scripts and benchmarks, and actionable calibration and design guidance for labs, clinics, and vendors.</p>
+                                <p><strong>What success looks like.</strong> Reduced groupwise performance gaps in simulations and benchtop tests, clearer calibration guidance adopted in protocols, and improved reliability across diverse users in subsequent studies.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {# ── WP3: Inclusive Participation ── #}
+                <section class="ov-section fi" id="wp3">
+                    <h2 class="ov-heading">Inclusive Participation in Research</h2>
+                    <div class="ov-divider"></div>
+                    <div class="wp-card">
+                        <img src="{{ 'images/wp3-inclusive-participation.jpg' | asset }}" alt="Community participation in research" class="wp-img"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="wp-img-placeholder" style="display:none"><i class="fas fa-users"></i></div>
+                        <div class="wp-body">
+                            <p class="wp-text">
+                                Participation is not evenly distributed. In one industry dataset of global neuroscience trials, only 1.6% of 8,015 participants were Black while 85.6% were White<sup><a href="#ref-4" id="cite-4">[4]</a></sup>. In the UK Biobank, about 95% of neuroimaging data is from White participants<sup><a href="#ref-5" id="cite-5">[5,</a></sup><sup><a href="#ref-6" id="cite-6">6]</a></sup>. If these disparities in clinical trial participation are not addressed urgently, they could significantly hinder the adoption, inclusivity, and acceptance of neurotechnology among minority populations.
+                            </p>
+                            <p class="wp-text">
+                                We conduct community-based participatory research to understand barriers to participation in neuroscience and neurotechnology research. Through semi-structured interviews and focus groups with non-white minority communities, we explore cultural, religious, socioeconomic, language and education factors, as well as stigma and mistrust toward brain research.
+                            </p>
+                            <div class="wp-activities">
+                                <div class="wp-activities-label">Key objectives</div>
+                                <div class="wp-activity"><i class="fas fa-check-circle"></i> Co-develop case studies with Community Research Champions; run focus groups and interviews in trusted community settings</div>
+                                <div class="wp-activity"><i class="fas fa-check-circle"></i> Identify practical enablers (translation, childcare, transport, flexible timing) and cultural considerations that shape participation</div>
+                                <div class="wp-activity"><i class="fas fa-check-circle"></i> Use iterative review cycles with participants, researchers and clinicians to refine barriers and solutions</div>
+                                <div class="wp-activity"><i class="fas fa-check-circle"></i> Produce clear guidance that teams can adopt in recruitment, consent and study conduct</div>
+                            </div>
+                            <div class="wp-outcome">
+                                <p><strong>Outputs.</strong> A concise participation toolkit, plain-language materials, recruitment and consent templates, and a barriers-solutions evidence summary for researchers and sponsors.</p>
+                                <p><strong>What success looks like.</strong> More representative research participation and stronger trust indicators across participating communities.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {# ── WP4: Equitable Access ── #}
+                <section class="ov-section fi" id="wp4">
+                    <h2 class="ov-heading">Equitable Access and Use</h2>
+                    <div class="ov-divider"></div>
+                    <div class="wp-card">
+                        <img src="{{ 'images/wp4-equitable-access.jpg' | asset }}" alt="Equitable access to neurotechnology" class="wp-img"
+                             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                        <div class="wp-img-placeholder" style="display:none"><i class="fas fa-universal-access"></i></div>
+                        <div class="wp-body">
+                            <p class="wp-text">
+                                Recent evidence shows significant underrepresentation of women in clinical trials and a lower likelihood of women undergoing deep brain stimulation (DBS) compared to men<sup><a href="#ref-7" id="cite-7">[7,</a></sup><sup><a href="#ref-8" id="cite-8a">8]</a></sup>. Racial and ethnic minorities also face lower rates of DBS procedures, even when accounting for disease severity and other demographic factors<sup><a href="#ref-8" id="cite-8b">[8,</a></sup><sup><a href="#ref-9" id="cite-9a">9]</a></sup>.
+                            </p>
+                            <p class="wp-text">
+                                For Parkinson's disease, one study found White patients were about five times more likely to receive DBS than Black patients<sup><a href="#ref-9" id="cite-9b">[9]</a></sup>. A multi-centre review in Germany and England found women were less likely to be referred and to accept DBS despite similar benefits<sup><a href="#ref-10" id="cite-10">[10]</a></sup>.
+                            </p>
+                            <p class="wp-text">
+                                Addressing these disparities, both from the patient perspective and in clinical decision-making, is crucial for developing equitable neurotechnology solutions, including DBS and future neural interfaces for treating neurological conditions.
+                            </p>
+                            <div class="wp-activities">
+                                <div class="wp-activities-label">Key objectives</div>
+                                <div class="wp-activity"><i class="fas fa-check-circle"></i> Quantify disparities across the DBS pathway, stratified by gender, ethnicity and deprivation</div>
+                                <div class="wp-activity"><i class="fas fa-check-circle"></i> Build a reproducible analysis using Data Connect records linking symptoms, comorbidities and outcomes</div>
+                                <div class="wp-activity"><i class="fas fa-check-circle"></i> Co-develop interview protocols with patient groups; conduct and thematically code interviews with patients and clinicians to surface barriers and enablers</div>
+                            </div>
+                            <div class="wp-outcome">
+                                <p><strong>Outputs.</strong> DBS equity insights summary, and a set of interventions and recommendations.</p>
+                                <p><strong>What success looks like.</strong> Smaller gaps in referral, offer and uptake by gender and ethnicity, better patient understanding and satisfaction, and adoption of equity prompts and dashboards by participating centres.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {# ── REFERENCES ── #}
+                <section class="ov-section fi" id="refs">
+                    <div class="ov-refs">
+                        <div class="ov-refs-header">
+                            <div class="ov-refs-title">References</div>
+                            <span class="ov-refs-count">10 sources</span>
+                        </div>
+                        <ol class="ov-refs-list" style="list-style:none">
+                            <li class="ov-ref-item" id="ref-1">
+                                <span class="ov-ref-num">1</span>
+                                <span class="ov-ref-entry">Kwasa, J., et al. (2023). <em>Demographic reporting and phenotypic exclusion in fNIRS</em>. Frontiers in Neuroscience. <a href="https://doi.org/10.3389/fnins.2023.1331375" target="_blank" rel="noopener">10.3389/fnins.2023.1331375</a><a href="#cite-1" class="ref-back">&#x21a9;&#xfe0e;</a></span>
+                            </li>
+                            <li class="ov-ref-item" id="ref-2">
+                                <span class="ov-ref-num">2</span>
+                                <span class="ov-ref-entry">Penner, F., et al. (2023). <em>Racial disparities in EEG research and their implications for our understanding of the maternal brain</em>. Cognitive, Affective, and Behavioral Neuroscience. <a href="https://doi.org/10.3758/s13415-022-01040-w" target="_blank" rel="noopener">10.3758/s13415-022-01040-w</a><a href="#cite-2" class="ref-back">&#x21a9;&#xfe0e;</a></span>
+                            </li>
+                            <li class="ov-ref-item" id="ref-3">
+                                <span class="ov-ref-num">3</span>
+                                <span class="ov-ref-entry">Zhang, J., et al. (2023). <em>Automatic analysis of skull thickness, scalp-to-cortex distance and association with age and sex in cognitively normal elderly</em>. Brain Stimulation. <a href="https://doi.org/10.1101/2023.01.19.524484" target="_blank" rel="noopener">10.1101/2023.01.19.524484</a><a href="#cite-3" class="ref-back">&#x21a9;&#xfe0e;</a></span>
+                            </li>
+                            <li class="ov-ref-item" id="ref-4">
+                                <span class="ov-ref-num">4</span>
+                                <span class="ov-ref-entry">Rutten-Jacobs, L., et al. (2024). <em>Racial and ethnic diversity in global neuroscience clinical trials</em>. Contemporary Clinical Trials Communications, 37, 101255. <a href="https://doi.org/10.1016/j.conctc.2024.101255" target="_blank" rel="noopener">10.1016/j.conctc.2024.101255</a><a href="#cite-4" class="ref-back">&#x21a9;&#xfe0e;</a></span>
+                            </li>
+                            <li class="ov-ref-item" id="ref-5">
+                                <span class="ov-ref-num">5</span>
+                                <span class="ov-ref-entry">Fry, A., et al. (2017). <em>Comparison of sociodemographic and health-related characteristics of UK Biobank participants with those of the general population</em>. American Journal of Epidemiology, 186, 1026-1034. <a href="https://doi.org/10.1093/aje/kwx246" target="_blank" rel="noopener">10.1093/aje/kwx246</a><a href="#cite-5" class="ref-back">&#x21a9;&#xfe0e;</a></span>
+                            </li>
+                            <li class="ov-ref-item" id="ref-6">
+                                <span class="ov-ref-num">6</span>
+                                <span class="ov-ref-entry">Ricard, J. A., et al. (2023). <em>Confronting racially exclusionary practices in the acquisition and analyses of neuroimaging data</em>. Nature Neuroscience, 26, 4-11. <a href="https://doi.org/10.1038/s41593-022-01218-y" target="_blank" rel="noopener">10.1038/s41593-022-01218-y</a><a href="#cite-6" class="ref-back">&#x21a9;&#xfe0e;</a></span>
+                            </li>
+                            <li class="ov-ref-item" id="ref-7">
+                                <span class="ov-ref-num">7</span>
+                                <span class="ov-ref-entry">Kubler, D., et al. (2023). <em>Gender-specific outcomes of deep brain stimulation for Parkinson's disease</em>. Neurological Sciences, 44, 1625-1631. <a href="https://doi.org/10.1007/s10072-023-06598-y" target="_blank" rel="noopener">10.1007/s10072-023-06598-y</a><a href="#cite-7" class="ref-back">&#x21a9;&#xfe0e;</a></span>
+                            </li>
+                            <li class="ov-ref-item" id="ref-8">
+                                <span class="ov-ref-num">8</span>
+                                <span class="ov-ref-entry">Hughes, N. C., Bishay, A. E., et al. (2024). <em>Disparities in access to deep brain stimulation for Parkinson's disease and proposed interventions: A literature review</em>. Stereotactic and Functional Neurosurgery, 102(3), 179-194. <a href="https://doi.org/10.1159/000538748" target="_blank" rel="noopener">10.1159/000538748</a><a href="#cite-8a" class="ref-back">&#x21a9;&#xfe0e;</a><a href="#cite-8b" class="ref-back">&#x21a9;&#xfe0e;</a></span>
+                            </li>
+                            <li class="ov-ref-item" id="ref-9">
+                                <span class="ov-ref-num">9</span>
+                                <span class="ov-ref-entry">Cramer, S. W., et al. (2022). <em>Persistent racial disparities in deep brain stimulation for Parkinson's disease</em>. Annals of Neurology, 92(2), 246-254. <a href="https://doi.org/10.1002/ana.26378" target="_blank" rel="noopener">10.1002/ana.26378</a><a href="#cite-9a" class="ref-back">&#x21a9;&#xfe0e;</a><a href="#cite-9b" class="ref-back">&#x21a9;&#xfe0e;</a></span>
+                            </li>
+                            <li class="ov-ref-item" id="ref-10">
+                                <span class="ov-ref-num">10</span>
+                                <span class="ov-ref-entry">Jost, S. T., et al. (2022). <em>Gender gap in deep brain stimulation for Parkinson's disease</em>. npj Parkinson's Disease, 8, 47. <a href="https://doi.org/10.1038/s41531-022-00305-y" target="_blank" rel="noopener">10.1038/s41531-022-00305-y</a><a href="#cite-10" class="ref-back">&#x21a9;&#xfe0e;</a></span>
+                            </li>
+                        </ol>
+                    </div>
+                    <div class="back-top">
+                        <a href="#top"><i class="fas fa-arrow-up"></i> Back to top</a>
+                    </div>
+                </section>
+
+            </div>{# end content column #}
+        </div>{# end ov-layout #}
+    </div>{# end container #}
+</main>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    /* Highlight the active TOC link as the user scrolls */
+    const sections = document.querySelectorAll('section[id]');
+    const tocLinks = document.querySelectorAll('.ov-toc-link[href]');
+    window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(s => {
+            if (window.scrollY >= s.offsetTop - 120) current = s.id;
+        });
+        tocLinks.forEach(l => {
+            l.classList.toggle('active', l.getAttribute('href') === '#' + current);
+        });
+    }, { passive: true });
+</script>
+{% endblock %}

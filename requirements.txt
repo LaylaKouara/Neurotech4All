@@ -1,0 +1,5 @@
+Flask>=3.0
+Frozen-Flask>=1.0
+Markdown>=3.5
+PyYAML>=6.0
+python-dateutil>=2.9

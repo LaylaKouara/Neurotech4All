@@ -1,0 +1,128 @@
+{# news_post.html
+   Individual news post page.
+   Variables from app.py news_post():
+     title, author, date_str, date_obj, teaser, tags (list),
+     body_html (rendered Markdown, needs postprocess_body filter for images),
+     hero (dict with src/alt/caption), references (list of dicts),
+     reading_time (int), canonical (str), related (list of dicts), slug.
+#}
+{% extends 'base.html' %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+
+{# ── ARTICLE HERO IMAGE ────────────────────────────────────────────────────── #}
+{% set hero_img = hero.src if hero is defined and hero.src else '' %}
+<div class="article-hero">
+    {% if hero_img %}
+    <img src="{{ hero_img | asset }}" alt="{{ hero.alt if hero is defined else title }}">
+    {% else %}
+    <div style="width:100%;height:100%;background:linear-gradient(135deg,var(--navy-mid),var(--blue-lt));display:flex;align-items:center;justify-content:center">
+        <i class="fas fa-brain" style="font-size:4rem;color:rgba(255,255,255,.25)"></i>
+    </div>
+    {% endif %}
+    <div class="article-hero-overlay"></div>
+    <div class="article-hero-meta">
+        <div class="container">
+            <p style="font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.7);margin-bottom:8px">
+                {% if tags %}{{ tags[0] }} &middot; {% endif %}{{ date_str }}
+            </p>
+            <h1 style="font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:800;color:#fff;line-height:1.2;letter-spacing:-.02em;max-width:680px">
+                {{ title }}
+            </h1>
+        </div>
+    </div>
+</div>
+
+{# ── ARTICLE BODY ──────────────────────────────────────────────────────────── #}
+<div class="article-wrap">
+
+    {# ── Article header: meta row + teaser ── #}
+    <div class="article-header">
+        <div class="article-meta-row">
+            {% for tag in (tags or []) %}
+            <span class="art-tag">{{ tag }}</span>
+            {% endfor %}
+            <span class="art-date"><i class="fas fa-calendar-alt" style="opacity:.5"></i> {{ date_str }}</span>
+            {% if author %}
+            <span class="art-dot">&middot;</span>
+            <span class="art-author">{{ author }}</span>
+            {% endif %}
+            {% if reading_time is defined %}
+            <span class="art-dot">&middot;</span>
+            <span class="art-reading"><i class="fas fa-clock" style="opacity:.5"></i> {{ reading_time }} min read</span>
+            {% endif %}
+        </div>
+        {% if teaser %}<p class="article-teaser">{{ teaser }}</p>{% endif %}
+    </div>
+
+    {# ── Article main content (rendered Markdown) ── #}
+    {# postprocess_body fixes image src paths for both dev and frozen modes #}
+    <div class="article-content">
+        {{ body_html | postprocess_body | safe }}
+    </div>
+
+    {# ── Tags ── #}
+    {% if tags %}
+    <div class="article-tags">
+        <span class="article-tags-label"><i class="fas fa-tag"></i></span>
+        {% for tag in tags %}
+        <span class="art-tag">{{ tag }}</span>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {# ── References (from YAML front matter) ── #}
+    {% if references is defined and references %}
+    <div class="article-refs">
+        <div class="article-refs-title">References</div>
+        {% for ref in references %}
+        <div class="ref-item">
+            {{ ref.authors }} ({{ ref.year }}). <em>{{ ref.title }}</em>.
+            {% if ref.source %} {{ ref.source }}.{% endif %}
+            {% if ref.url %}<a href="{{ ref.url }}" target="_blank" rel="noopener">Link</a>{% endif %}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    {# ── Navigation bar: back link ── #}
+    <div class="article-nav">
+        <a href="{{ url_for('news') | relurl }}" class="back-link">
+            <i class="fas fa-arrow-left"></i> All News
+        </a>
+    </div>
+
+</div>{# /article-wrap #}
+
+{# ── RELATED POSTS ────────────────────────────────────────────────────────── #}
+{# related is up to 2 posts that share at least one tag with this post #}
+{% if related %}
+<div class="related">
+    <div class="related-inner">
+        <div class="related-title">You might also like</div>
+        <div class="related-grid">
+            {% for item in related %}
+            <a href="{{ item.url | relurl }}" class="rel-card">
+                {% if item.hero_src %}
+                <img src="{{ item.hero_src | asset }}" alt="{{ item.hero_alt }}" class="rel-thumb"
+                     onerror="this.style.display='none'">
+                {% endif %}
+                <div class="rel-body">
+                    <div class="rel-meta">
+                        {% if item.tags %}<span class="rel-tag">{{ item.tags[0] }}</span>{% endif %}
+                        <span class="rel-date">{{ item.date_str }}</span>
+                    </div>
+                    <div class="rel-h">{{ item.title }}</div>
+                    <div class="rel-teaser">{{ item.teaser }}</div>
+                    <span class="rel-link">Read More <i class="fas fa-arrow-right"></i></span>
+                </div>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% endblock %}

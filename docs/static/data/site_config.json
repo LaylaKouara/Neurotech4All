@@ -1,0 +1,96 @@
+{
+  "site": {
+    "name": "Neurotech4All",
+    "tagline": "Making Neurotechnology Accessible to All",
+    "description": "A UK research project funded by ARIA, working to make neurotechnology accessible to all by addressing inequities in design, research participation, and adoption.",
+    "origin": "https://www.neurotech4all.com",
+    "email": "contact@neurotech4all.co.uk",
+    "address": "University of Sheffield, Western Bank, Sheffield S10 2TN",
+    "formspree_id": "mblyzddb",
+    "youtube": "https://www.youtube.com/@neurotech4all",
+    "linkedin": "https://www.linkedin.com/company/neurotech4all/"
+  },
+  "nav": {
+    "links": [
+      { "label": "Home",     "endpoint": "index",     "anchor": "" },
+      { "label": "About",    "endpoint": "overview",  "anchor": "" },
+      { "label": "Team",     "endpoint": "index",     "anchor": "#team" },
+      { "label": "Partners", "endpoint": "index",     "anchor": "#partners" },
+      { "label": "News",     "endpoint": "news",      "anchor": "" },
+      { "label": "Contact",  "endpoint": "index",     "anchor": "#contact", "cta": true }
+    ]
+  },
+  "footer": {
+    "columns": [
+      {
+        "title": "Navigate",
+        "links": [
+          { "label": "About",    "endpoint": "overview", "anchor": "" },
+          { "label": "Team",     "endpoint": "index",    "anchor": "#team" },
+          { "label": "Partners", "endpoint": "index",    "anchor": "#partners" }
+        ]
+      },
+      {
+        "title": "Content",
+        "links": [
+          { "label": "News",    "endpoint": "news",  "anchor": "" },
+          { "label": "Contact", "endpoint": "index", "anchor": "#contact" }
+        ]
+      },
+      {
+        "title": "Connect",
+        "links": [
+          { "label": "YouTube",  "icon": "fab fa-youtube",     "url": "https://www.youtube.com/@neurotech4all" },
+          { "label": "LinkedIn", "icon": "fab fa-linkedin-in", "url": "https://www.linkedin.com/company/neurotech4all/" }
+        ]
+      }
+    ]
+  },
+  "partners": [
+    {
+      "name": "Parkinson's UK",
+      "url": "https://www.parkinsons.org.uk/",
+      "logo_local": "images/parkinsons-uk-logo.png"
+    },
+    {
+      "name": "University of Sheffield",
+      "url": "https://sheffield.ac.uk/",
+      "logo": "https://www.hepp.ac.uk/wp-content/uploads/2022/11/UOSLogo_Primary_Violet_RGB.png"
+    },
+    {
+      "name": "NIHR",
+      "url": "https://hrc-longterm.nihr.ac.uk/",
+      "logo": "https://hrc-longterm.nihr.ac.uk/storage/app/uploads/public/67b/317/17e/67b31717edd84848054541.svg"
+    },
+    {
+      "name": "ISRAAC",
+      "url": "https://israac.org.uk/",
+      "logo": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqwY9Nl-zOFRjIIV4qVYfy6TYhAQHZvNH_yQ&s"
+    },
+    {
+      "name": "ARIA",
+      "url": "https://www.aria.org.uk/opportunity-spaces/scalable-neural-interfaces/precision-neurotechnologies/meet-the-creators?tabId=future-adoption&cardId=addressing-inequities",
+      "logo": "https://app-aria-cd-prod.azurewebsites.net/media/hsxblxrf/logo-aria-black.svg"
+    },
+    {
+      "name": "Fatima Community Mosque",
+      "url": "https://fatima-community-centre.wheree.com/",
+      "logo_local": "images/fatimamosque.png"
+    },
+    {
+      "name": "University of Leeds",
+      "url": "https://www.leeds.ac.uk/",
+      "logo_local": "images/university-of-leeds-logo.png"
+    },
+    {
+      "name": "ShipShape",
+      "url": "https://www.shipshape.org.uk/",
+      "logo_local": "images/shipshape.png"
+    },
+    {
+      "name": "Sheffield Teaching Hospitals NHS",
+      "url": "https://www.sth.nhs.uk/",
+      "logo": "https://www.sth.nhs.uk/images/logo.png"
+    }
+  ]
+}

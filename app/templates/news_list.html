@@ -1,0 +1,206 @@
+{# news_list.html
+   News listing page with tag filter buttons and client-side pagination.
+   All items are rendered into the DOM at load time; filtering and pagination
+   happen in JavaScript so the frozen static site works without a server.
+   Data: news_items (list of dicts from app.py _build_news_items).
+#}
+{% extends 'base.html' %}
+
+{% block page_title %}News &amp; Events{% endblock %}
+
+{% block content %}
+
+{# ── PAGE HERO ────────────────────────────────────────────────────────────── #}
+<div class="page-hero">
+    <div class="container">
+        <span class="chip"><i class="fas fa-newspaper"></i> Updates</span>
+        <h1>News &amp; Events</h1>
+        <p>Research findings, community events, workshops, and project milestones from Neurotech4All.</p>
+    </div>
+</div>
+
+{# ── FILTER BAR (sticky below nav) ───────────────────────────────────────── #}
+<div class="filters-bar">
+    <div class="container filters-inner">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="events">Events</button>
+        <button class="filter-btn" data-filter="community">Community</button>
+        <button class="filter-btn" data-filter="research">Research</button>
+        <button class="filter-btn" data-filter="media">Media</button>
+        <div class="filter-search">
+            <i class="fas fa-magnifying-glass"></i>
+            <input type="text" id="search-input" placeholder="Search news..." aria-label="Search news">
+        </div>
+    </div>
+</div>
+
+{# ── NEWS GRID ────────────────────────────────────────────────────────────── #}
+<section class="news-section">
+    <div class="container">
+
+        <div class="news-list-grid" id="news-grid">
+
+            {% for item in news_items %}
+            {# data-tags stores lowercase tags for JS filtering #}
+            <article class="news-list-card"
+                     data-tags="{{ item.tags | join(' ') | lower }}"
+                     data-title="{{ item.title | lower }}">
+
+                {# Thumbnail: linked image or placeholder icon #}
+                {% if item.hero_src %}
+                <a href="{{ item.url | relurl }}" class="news-list-thumb-wrap">
+                    <img src="{{ item.hero_src | asset }}" alt="{{ item.hero_alt }}"
+                         class="news-list-thumb"
+                         onerror="this.outerHTML='<div class=news-list-thumb-ph><i class=fas\ fa-brain></i></div>'">
+                </a>
+                {% else %}
+                <a href="{{ item.url | relurl }}" class="news-list-thumb-wrap">
+                    <div class="news-list-thumb-ph"><i class="fas fa-brain"></i></div>
+                </a>
+                {% endif %}
+
+                <div class="news-list-body">
+                    <div class="news-meta">
+                        <span class="news-list-date">{{ item.date_str }}</span>
+                        {% if item.tags %}<span class="news-list-tag">{{ item.tags[0] }}</span>{% endif %}
+                    </div>
+
+                    {# Clickable title: JS click handler navigates to post URL #}
+                    <div class="news-list-h" data-url="{{ item.url | relurl }}">{{ item.title }}</div>
+
+                    <div class="news-list-teaser">{{ item.teaser }}</div>
+
+                    <div class="news-list-author-wrap">
+                        <div class="news-author-avatar">
+                            {# Two-letter initial from author name #}
+                            {{ item.author.split()[0][0] | upper }}{% if item.author.split()|length > 1 %}{{ item.author.split()[-1][0] | upper }}{% endif %}
+                        </div>
+                        <div class="news-author-name">{{ item.author }} &middot; {{ item.reading_time }} min read</div>
+                    </div>
+
+                    <a href="{{ item.url | relurl }}" class="news-read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </article>
+            {% endfor %}
+
+        </div>{# /news-grid #}
+
+        {# Empty state (shown by JS when no results match) #}
+        <div class="no-results" id="no-results">
+            <i class="fas fa-search"></i>
+            <p>No news items match your search.</p>
+        </div>
+
+        {# Pagination (populated by JS) #}
+        <div class="pagination" id="pagination"></div>
+
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    /* ── News listing: filter + search + pagination ── */
+    (function () {
+        const PER_PAGE = 6;
+        let currentPage = 1;
+        let activeFilter = 'all';
+        let searchTerm = '';
+
+        const grid    = document.getElementById('news-grid');
+        const cards   = Array.from(grid.querySelectorAll('.news-list-card'));
+        const noRes   = document.getElementById('no-results');
+        const pagEl   = document.getElementById('pagination');
+
+        /* Make each card's title clickable (navigates to its post URL) */
+        grid.querySelectorAll('.news-list-h').forEach(el => {
+            el.addEventListener('click', () => {
+                const url = el.dataset.url;
+                if (url) window.location.href = url;
+            });
+        });
+
+        /* Return all cards that pass the active filter + search */
+        function getVisible() {
+            return cards.filter(c => {
+                const tags  = c.dataset.tags  || '';
+                const title = c.dataset.title || '';
+                const passFilter = activeFilter === 'all' || tags.includes(activeFilter);
+                const passSearch = !searchTerm   || title.includes(searchTerm) ||
+                                   (c.querySelector('.news-list-teaser')?.textContent.toLowerCase().includes(searchTerm) ?? false);
+                return passFilter && passSearch;
+            });
+        }
+
+        /* Render the current page of cards and regenerate pagination buttons */
+        function renderPage() {
+            const visible    = getVisible();
+            const totalPages = Math.ceil(visible.length / PER_PAGE);
+            if (currentPage > totalPages) currentPage = 1;
+
+            /* Show/hide cards based on current page */
+            cards.forEach(c => c.style.display = 'none');
+            const start = (currentPage - 1) * PER_PAGE;
+            visible.slice(start, start + PER_PAGE).forEach(c => c.style.display = '');
+
+            /* Toggle the empty state */
+            noRes.style.display = visible.length ? 'none' : 'block';
+
+            /* Build pagination buttons */
+            pagEl.innerHTML = '';
+            if (totalPages <= 1) return;
+
+            const prev = document.createElement('button');
+            prev.className = 'page-btn';
+            prev.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            prev.disabled  = currentPage === 1;
+            prev.addEventListener('click', () => { currentPage--; renderPage(); });
+            pagEl.appendChild(prev);
+
+            for (let i = 1; i <= totalPages; i++) {
+                const btn = document.createElement('button');
+                btn.className = 'page-btn' + (i === currentPage ? ' active' : '');
+                btn.textContent = i;
+                btn.addEventListener('click', (e) => {
+                    currentPage = parseInt(e.target.textContent);
+                    renderPage();
+                });
+                pagEl.appendChild(btn);
+            }
+
+            const next = document.createElement('button');
+            next.className = 'page-btn';
+            next.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            next.disabled  = currentPage === totalPages;
+            next.addEventListener('click', () => { currentPage++; renderPage(); });
+            pagEl.appendChild(next);
+        }
+
+        /* Filter button clicks */
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeFilter  = btn.dataset.filter;
+                currentPage   = 1;
+                renderPage();
+            });
+        });
+
+        /* Search input (debounced 250 ms) */
+        let searchTimer;
+        document.getElementById('search-input').addEventListener('input', e => {
+            clearTimeout(searchTimer);
+            searchTimer = setTimeout(() => {
+                searchTerm  = e.target.value.trim().toLowerCase();
+                currentPage = 1;
+                renderPage();
+            }, 250);
+        });
+
+        /* Initial render */
+        renderPage();
+    })();
+</script>
+{% endblock %}

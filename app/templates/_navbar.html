@@ -1,0 +1,46 @@
+{# _navbar.html
+   Shared navigation bar, included by base.html.
+   Nav links are driven by config.nav.links from site_config.json.
+   The active link is determined by comparing the link's `endpoint` to
+   the current request.endpoint.
+#}
+<nav class="nav" id="nav">
+    <div class="container nav-inner">
+
+        {# Brand / logo #}
+        <a href="{{ url_for('index') | relurl }}" class="nav-brand">
+            <div class="nav-logo">
+                <img src="{{ 'images/brain.png' | asset }}" alt="Neurotech4All" style="width:26px;height:26px;object-fit:contain">
+            </div>
+            {{ config.site.name }}
+        </a>
+
+        {# Nav links from site_config.json #}
+        <ul class="nav-links" id="nav-links">
+            {% for link in config.nav.links %}
+            <li>
+                {# Build the href: url_for the endpoint, then append any anchor #}
+                {% set href = (url_for(link.endpoint) + link.anchor) | relurl %}
+
+                {# Mark as active only for top-level page links (no anchor).
+                   Also treat news_post as a child of the news endpoint so "News"
+                   stays highlighted when reading an individual article. #}
+                {% set endpoint_match = (request.endpoint == link.endpoint) or
+                   (link.endpoint == 'news' and request.endpoint == 'news_post') %}
+                {% set is_active = (endpoint_match and not link.anchor) %}
+
+                <a href="{{ href }}"
+                   class="nav-link{% if link.cta is defined and link.cta %} nav-cta{% endif %}{% if is_active %} active{% endif %}">
+                    {{ link.label }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+
+        {# Mobile hamburger button #}
+        <button class="nav-toggle" id="nav-toggle" aria-label="Open menu">
+            <span></span><span></span><span></span>
+        </button>
+
+    </div>
+</nav>

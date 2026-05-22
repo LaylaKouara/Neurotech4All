@@ -1,0 +1,351 @@
+{# index.html
+   Homepage template.
+   Sections (in order): Hero, About, Our Work (work packages), News carousel,
+   Team, Partners, Contact.
+   Data: news_preview (list of dicts), members (list of dicts from team.json).
+   Partners come from config.partners (site_config.json).
+#}
+{% extends 'base.html' %}
+
+{% block page_title %}Making Neurotechnology Accessible to All{% endblock %}
+
+{% block content %}
+
+{# ── HERO ────────────────────────────────────────────────────────────────── #}
+<section class="hero" id="home">
+    <div class="hero-visual">
+        <img src="{{ 'images/hero.png' | asset }}" alt="Making neurotechnology accessible">
+    </div>
+    <div class="hero-fade"></div>
+    <div class="container">
+        <div class="hero-content">
+            <a href="https://www.aria.org.uk/" target="_blank" rel="noopener" class="hero-badge">
+                <i class="fas fa-star"></i> Funded by ARIA
+            </a>
+            <h1 class="hero-h1">
+                Making Neurotechnology<br>
+                <span class="accent">Accessible to All</span>
+            </h1>
+            <p class="hero-sub">
+                Addressing inequities in neurotechnology design, research participation, and adoption for a more inclusive future.
+            </p>
+            <div class="hero-actions">
+                <a href="{{ url_for('overview') | relurl }}" class="btn btn-primary">Learn More</a>
+                <a href="{{ url_for('news') | relurl }}" class="btn btn-outline">Latest News</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+{# ── ABOUT ───────────────────────────────────────────────────────────────── #}
+<section class="about" id="about">
+    <div class="container">
+        <span class="chip fi"><i class="fas fa-circle-info"></i> About the Project</span>
+        <h2 class="section-title fi" style="margin-top:14px;margin-bottom:24px;max-width:780px">Our Mission</h2>
+        <p class="about-intro fi">
+            Neurotech4All is a UK research project funded by ARIA (Advanced Research and Invention Agency), working to make neurotechnology truly inclusive and accessible to all.
+        </p>
+        <div class="about-cols">
+            <p class="about-body fi">
+                We explore how neurotechnologies, from brain-computer interfaces to deep brain stimulation, can be developed and implemented in ways that reflect the full diversity of people who may use them. Our work spans neuroscience, engineering, social science, and community-based research.
+            </p>
+            <p class="about-body fi">
+                Our research investigates the systemic inequities that affect who benefits from neurotechnology. We work directly with communities, patients, and clinicians to understand barriers faced by marginalised groups, and to co-develop practical, lasting solutions and recommendations.
+            </p>
+        </div>
+        <a href="{{ url_for('overview') | relurl }}#work" class="btn btn-outline fi">
+            Learn About Our Work <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+</section>
+
+{# ── VIDEO ────────────────────────────────────────────────────────────────── #}
+<section style="background:#fff;padding:0 0 80px">
+    <div class="container">
+        <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;border-radius:var(--r);box-shadow:var(--shadow-lg)">
+            <iframe
+                src="https://www.youtube-nocookie.com/embed/Mp6FU8QgzK0?rel=0&modestbranding=1"
+                title="Neurotech4All overview"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowfullscreen loading="lazy"
+                style="position:absolute;top:0;left:0;width:100%;height:100%;border:0">
+            </iframe>
+        </div>
+    </div>
+</section>
+
+{# ── OUR WORK / WORK PACKAGES ─────────────────────────────────────────────── #}
+<section class="work" id="work">
+    <div class="container">
+        <div class="section-header">
+            <span class="chip"><i class="fas fa-microscope"></i> Research Programme</span>
+            <h2 class="section-title">What We Do</h2>
+            <p class="section-desc">Our research is structured around four key objectives and three dedicated work packages, each tackling a different dimension of inequity in neurotechnology.</p>
+        </div>
+
+        <div class="work-subhead">Work Packages</div>
+        <div class="wp-grid">
+
+            <div class="wp fi">
+                <img src="{{ 'images/wp2-calibration-biases.jpg' | asset }}" alt="Calibration and Design Biases" class="wp-img">
+                <div class="wp-body">
+                    <div class="wp-title">Calibration and Design Biases</div>
+                    <div class="wp-desc">Investigating how neurotechnology systems are calibrated and designed, and whether these processes introduce systematic biases that disadvantage certain groups of users.</div>
+                    <div style="margin-top:20px">
+                        <a href="{{ url_for('overview') | relurl }}#wp2" class="btn btn-outline" style="font-size:.82rem;padding:10px 20px">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wp fi d1">
+                <img src="{{ 'images/wp3-inclusive-participation.jpg' | asset }}" alt="Inclusive Participation in Research" class="wp-img">
+                <div class="wp-body">
+                    <div class="wp-title">Inclusive Participation in Research</div>
+                    <div class="wp-desc">Exploring why minority ethnic groups are often underrepresented in neurotechnology research, and developing better approaches to community engagement and participation.</div>
+                    <div style="margin-top:20px">
+                        <a href="{{ url_for('overview') | relurl }}#wp3" class="btn btn-outline" style="font-size:.82rem;padding:10px 20px">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wp fi d2">
+                <img src="{{ 'images/wp4-equitable-access.jpg' | asset }}" alt="Equitable Access and Use" class="wp-img">
+                <div class="wp-body">
+                    <div class="wp-title">Equitable Access and Use</div>
+                    <div class="wp-desc">Examining disparities in who has access to and benefits from neurotechnology in clinical settings, with a focus on Parkinson's disease and the gender and ethnicity gaps in treatment.</div>
+                    <div style="margin-top:20px">
+                        <a href="{{ url_for('overview') | relurl }}#wp4" class="btn btn-outline" style="font-size:.82rem;padding:10px 20px">Learn More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{# ── NEWS CAROUSEL ────────────────────────────────────────────────────────── #}
+{# news_preview is a list of up to 9 items (3 slides of 3); passed from index() #}
+<section class="news-strip" id="news">
+    <div class="container">
+        <div class="section-header">
+            <span class="chip"><i class="fas fa-newspaper"></i> Latest Updates</span>
+            <h2 class="section-title">News &amp; Events</h2>
+            <p class="section-desc">Stay up to date with our latest research findings, community events, and project milestones.</p>
+        </div>
+
+        {# Group news_preview into slides of 3 using a loop with step 3 #}
+        {% for i in range(0, news_preview|length, 3) %}
+        {% set slide_items = news_preview[i:i+3] %}
+        <div class="news-slide {% if loop.first %}active{% endif %}" id="slide-{{ loop.index0 }}">
+            <div class="news-grid">
+                {% for item in slide_items %}
+                <a href="{{ item.url | relurl }}" class="news-card">
+                    {% if item.hero_src %}
+                        <img src="{{ item.hero_src | asset }}" alt="{{ item.hero_alt }}" class="news-thumb"
+                             onerror="this.style.display='none'">
+                    {% else %}
+                        <div class="news-thumb-ph"><i class="fas fa-brain"></i></div>
+                    {% endif %}
+                    <div class="news-body">
+                        <div class="news-meta">
+                            <span class="news-date">{{ item.date_str }}</span>
+                            {% if item.tags %}<span class="news-tag">{{ item.tags[0] }}</span>{% endif %}
+                        </div>
+                        <div class="news-h">{{ item.title }}</div>
+                        <div class="news-teaser">{{ item.teaser }}</div>
+                    </div>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+        {# Prev / dots / next carousel controls #}
+        <div class="carousel-controls">
+            <button class="carousel-btn" id="newsPrev"><i class="fas fa-arrow-left"></i></button>
+            <div class="carousel-dots" id="newsDots">
+                {% for i in range(0, news_preview|length, 3) %}
+                <button class="carousel-dot {% if loop.first %}active{% endif %}"></button>
+                {% endfor %}
+            </div>
+            <button class="carousel-btn" id="newsNext"><i class="fas fa-arrow-right"></i></button>
+        </div>
+
+        <div class="news-footer">
+            <a href="{{ url_for('news') | relurl }}" class="btn btn-ghost">View All News <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+{# ── TEAM ─────────────────────────────────────────────────────────────────── #}
+{# members is loaded from team.json and shuffled in the route; to add a member,
+   edit app/static/data/team.json -- no template changes needed. #}
+<section class="team" id="team">
+    <div class="container">
+        <div class="section-header">
+            <span class="chip"><i class="fas fa-users"></i> The People</span>
+            <h2 class="section-title">Meet the Team</h2>
+            <p class="section-desc">An interdisciplinary team bringing together expertise in neuroscience, engineering, public engagement, and research management.</p>
+        </div>
+        <div class="team-grid">
+            {% for m in members %}
+            {% set delay_class = ['', 'd1', 'd2', 'd3'][loop.index0 % 4] %}
+            <div class="member fi {{ delay_class }}">
+                <div class="member-img-wrap">
+                    <img src="{{ m.image | asset }}" alt="{{ m.name }}" class="member-img"
+                         onerror="this.classList.add('broken')">
+                    <div class="member-overlay">
+                        <div class="member-socials">
+                            {% if m.linkedin %}
+                            <a href="{{ m.linkedin }}" target="_blank" rel="noopener" aria-label="LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            {% endif %}
+                            {% if m.researchgate %}
+                            <a href="{{ m.researchgate }}" target="_blank" rel="noopener" aria-label="ResearchGate">
+                                <i class="fab fa-researchgate"></i>
+                            </a>
+                            {% endif %}
+                            {% if m.scholar %}
+                            <a href="{{ m.scholar }}" target="_blank" rel="noopener" aria-label="Google Scholar">
+                                <i class="fas fa-graduation-cap"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="member-info">
+                    <div class="member-name">{{ m.name }}</div>
+                    <div class="member-role">{{ m.role }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# ── PARTNERS ─────────────────────────────────────────────────────────────── #}
+{# Partners come from config.partners in site_config.json.
+   To add/remove a partner, edit that file. No template changes needed. #}
+<section class="partners" id="partners">
+    <div class="container">
+        <div class="section-header">
+            <span class="chip fi"><i class="fas fa-handshake"></i> Collaborations</span>
+            <h2 class="section-title fi">Our Partners &amp; Collaborators</h2>
+            <p class="section-desc fi">Working with leading organisations across research, healthcare, and community sectors to advance inclusive neurotechnology.</p>
+        </div>
+        <div class="partners-row fi">
+            {% for p in config.partners %}
+            <a href="{{ p.url }}" target="_blank" rel="noopener" class="partner">
+                {% if p.logo_local is defined %}
+                    <img src="{{ p.logo_local | asset }}" alt="{{ p.name }}"
+                         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+                    <span class="partner-name" style="display:none">{{ p.name }}</span>
+                {% else %}
+                    <img src="{{ p.logo }}" alt="{{ p.name }}">
+                {% endif %}
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+{# ── CONTACT ──────────────────────────────────────────────────────────────── #}
+<section class="contact" id="contact">
+    <div class="container">
+        <div class="section-header">
+            <span class="chip"><i class="fas fa-envelope"></i> Get in Touch</span>
+            <h2 class="section-title">Contact Us</h2>
+            <p class="section-desc">Whether you are a researcher, patient, clinician, or community member, we would love to hear from you.</p>
+        </div>
+        <div class="contact-grid">
+            <div>
+                <div class="contact-side-title">Reach Out</div>
+                <div class="c-detail">
+                    <div class="c-icon"><i class="fas fa-location-dot"></i></div>
+                    <div>
+                        <div class="c-label">Address</div>
+                        <div class="c-val">{{ config.site.address }}</div>
+                    </div>
+                </div>
+                <div class="c-detail">
+                    <div class="c-icon"><i class="fas fa-envelope"></i></div>
+                    <div>
+                        <div class="c-label">Email</div>
+                        <div class="c-val">
+                            <a href="mailto:{{ config.site.email }}" style="color:inherit">{{ config.site.email }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="c-socials">
+                    {% if config.site.youtube %}
+                    <a href="{{ config.site.youtube }}" target="_blank" rel="noopener" class="c-social" aria-label="YouTube">
+                        <i class="fab fa-youtube"></i>
+                    </a>
+                    {% endif %}
+                    {% if config.site.linkedin %}
+                    <a href="{{ config.site.linkedin }}" target="_blank" rel="noopener" class="c-social" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="c-form">
+                <form action="https://formspree.io/f/{{ config.site.formspree_id }}" method="POST">
+                    <div class="f-row">
+                        <div class="f-group">
+                            <label class="f-label" for="name">Your Name</label>
+                            <input type="text" id="name" name="name" class="f-input" placeholder="Jane Smith" required>
+                        </div>
+                        <div class="f-group">
+                            <label class="f-label" for="email">Email Address</label>
+                            <input type="email" id="email" name="email" class="f-input" placeholder="jane@example.com" required>
+                        </div>
+                    </div>
+                    <div class="f-group">
+                        <label class="f-label" for="subject">Subject</label>
+                        <select id="subject" name="subject" class="f-input">
+                            <option value="">Select a topic...</option>
+                            <option>Research Collaboration</option>
+                            <option>Community Engagement</option>
+                            <option>Patient / Clinical Enquiry</option>
+                            <option>Media &amp; Press</option>
+                            <option>General Enquiry</option>
+                        </select>
+                    </div>
+                    <div class="f-group">
+                        <label class="f-label" for="message">Message</label>
+                        <textarea id="message" name="message" class="f-input" placeholder="Tell us about your enquiry..." required></textarea>
+                    </div>
+                    <button type="submit" class="f-submit">
+                        <i class="fas fa-paper-plane"></i> Send Message
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    /* News carousel: cycles through .news-slide divs using prev/next/dot controls */
+    (function () {
+        const slides = document.querySelectorAll('.news-slide');
+        const dots   = document.querySelectorAll('#newsDots .carousel-dot');
+        if (!slides.length) return;
+        let cur = 0;
+        function show(n) {
+            slides[cur].classList.remove('active');
+            dots[cur].classList.remove('active');
+            cur = (n + slides.length) % slides.length;
+            slides[cur].classList.add('active');
+            dots[cur].classList.add('active');
+        }
+        document.getElementById('newsPrev').addEventListener('click', () => show(cur - 1));
+        document.getElementById('newsNext').addEventListener('click', () => show(cur + 1));
+        dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
+    })();
+</script>
+{% endblock %}
