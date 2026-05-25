@@ -71,11 +71,11 @@ Partner logos can be external URLs (`"logo": "https://..."`) or local files (`"l
 
 | Path | Reason |
 |---|---|
-| `app/templates/` | HTML templates. Changes here affect every page. |
-| `app/app.py` | The Flask application. Do not touch unless you know Python/Flask. |
-| `app/static/css/main.css` | All site styles. Do not touch unless you know CSS. |
+| `app/templates/` | HTML templates. Changes here affect the structure and layout of every page. |
+| `app/app.py` | The Flask application that powers the site. Only edit this if you need to change how the site is built or how content is processed. |
+| `app/static/css/main.css` | All site styles. Only edit this if you want to change the look and feel of the site. |
 | `freeze.py` | The build script that generates the static site. |
-| `docs/` | Auto-generated output. Never edit these files directly. They are overwritten every time you build. |
+| `docs/` | Auto-generated output. Never edit these files directly — they are overwritten every time you run `python freeze.py`. |
 
 ---
 
@@ -83,7 +83,7 @@ Partner logos can be external URLs (`"logo": "https://..."`) or local files (`"l
 
 ### 1. Set up (first time only)
 
-Install the required Python packages:
+Clone the repository to your device, then install the required Python packages (ensuring you have fetched the latest changes if returning to the project):
 
 ```
 pip install -r requirements.txt
