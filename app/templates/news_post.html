@@ -10,6 +10,17 @@
 
 {% block page_title %}{{ title }}{% endblock %}
 
+{% block extra_head %}
+{% set _og_img = (hero.src | asset) if (hero is defined and hero.src) else '' %}
+<meta property="og:type"        content="article">
+<meta property="og:title"       content="{{ title }}">
+<meta property="og:description" content="{{ teaser }}">
+<meta property="og:url"         content="{{ canonical }}">
+{% if _og_img %}<meta property="og:image" content="https://www.neurotech4all.com{{ _og_img }}">{% endif %}
+<meta property="og:site_name"   content="Neurotech4All">
+<meta name="twitter:card"       content="summary_large_image">
+{% endblock %}
+
 {% block content %}
 
 {# ── ARTICLE HERO IMAGE ────────────────────────────────────────────────────── #}
@@ -87,11 +98,20 @@
     </div>
     {% endif %}
 
-    {# ── Navigation bar: back link ── #}
+    {# ── Navigation bar: back link + share buttons ── #}
     <div class="article-nav">
         <a href="{{ url_for('news') | relurl }}" class="back-link">
             <i class="fas fa-arrow-left"></i> All News
         </a>
+        <div class="share-btns">
+            <span class="share-label">Share</span>
+            <a id="share-linkedin" href="#" class="share-btn" target="_blank" rel="noopener" aria-label="Share on LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a id="share-email" href="#" class="share-btn" aria-label="Share via Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
     </div>
 
 </div>{# /article-wrap #}
@@ -125,4 +145,17 @@
 </div>
 {% endif %}
 
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+(function () {
+    var url   = encodeURIComponent(window.location.href);
+    var title = encodeURIComponent(document.title);
+    var li = document.getElementById('share-linkedin');
+    var em = document.getElementById('share-email');
+    if (li) li.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + url;
+    if (em) em.href = 'mailto:?subject=' + title + '&body=' + url;
+})();
+</script>
 {% endblock %}

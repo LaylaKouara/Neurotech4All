@@ -28,6 +28,15 @@
 
     
     
+
+<meta property="og:type"        content="article">
+<meta property="og:title"       content="University of Sheffield Announces ARIA Precision Neurotechnologies Funding">
+<meta property="og:description" content="The University of Sheffield has announced that our project will lead new ARIA-funded research on inclusive precision neurotechnologies, as part of a 69 million pound national initiative.">
+<meta property="og:url"         content="https://www.neurotech4all.com/news/aria-funding-announcement.html">
+<meta property="og:image" content="https://www.neurotech4all.com/static/data/news/images/sheffield-aria-announcement.jpg">
+<meta property="og:site_name"   content="Neurotech4All">
+<meta name="twitter:card"       content="summary_large_image">
+
 </head>
 <body>
 
@@ -37,7 +46,7 @@
     <div class="container nav-inner">
 
         
-        <a href="/" class="nav-brand">
+        <a href="/../index.html" class="nav-brand">
             <div class="nav-logo">
                 <img src="/static/images/brain.png" alt="Neurotech4All" style="width:26px;height:26px;object-fit:contain">
             </div>
@@ -55,7 +64,7 @@
                 
                 
 
-                <a href="/"
+                <a href="/../index.html"
                    class="nav-link">
                     Home
                 </a>
@@ -69,7 +78,7 @@
                 
                 
 
-                <a href="/overview.html"
+                <a href="/../overview.html"
                    class="nav-link">
                     About
                 </a>
@@ -83,7 +92,7 @@
                 
                 
 
-                <a href="/#team"
+                <a href="/../index.html#team"
                    class="nav-link">
                     Team
                 </a>
@@ -97,7 +106,7 @@
                 
                 
 
-                <a href="/#partners"
+                <a href="/../index.html#partners"
                    class="nav-link">
                     Partners
                 </a>
@@ -111,7 +120,7 @@
                 
                 
 
-                <a href="/news.html"
+                <a href="/../news.html"
                    class="nav-link active">
                     News
                 </a>
@@ -125,7 +134,7 @@
                 
                 
 
-                <a href="/#contact"
+                <a href="/../index.html#contact"
                    class="nav-link nav-cta">
                     Contact
                 </a>
@@ -246,9 +255,18 @@
 
     
     <div class="article-nav">
-        <a href="/news.html" class="back-link">
+        <a href="/../news.html" class="back-link">
             <i class="fas fa-arrow-left"></i> All News
         </a>
+        <div class="share-btns">
+            <span class="share-label">Share</span>
+            <a id="share-linkedin" href="#" class="share-btn" target="_blank" rel="noopener" aria-label="Share on LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+            <a id="share-email" href="#" class="share-btn" aria-label="Share via Email">
+                <i class="fas fa-envelope"></i>
+            </a>
+        </div>
     </div>
 
 </div>
@@ -326,17 +344,17 @@
                 
                     
                         
-                        <a href="/overview.html" class="footer-link">About</a>
+                        <a href="/../overview.html" class="footer-link">About</a>
                     
                 
                     
                         
-                        <a href="/#team" class="footer-link">Team</a>
+                        <a href="/../index.html#team" class="footer-link">Team</a>
                     
                 
                     
                         
-                        <a href="/#partners" class="footer-link">Partners</a>
+                        <a href="/../index.html#partners" class="footer-link">Partners</a>
                     
                 
             </div>
@@ -346,12 +364,12 @@
                 
                     
                         
-                        <a href="/news.html" class="footer-link">News</a>
+                        <a href="/../news.html" class="footer-link">News</a>
                     
                 
                     
                         
-                        <a href="/#contact" class="footer-link">Contact</a>
+                        <a href="/../index.html#contact" class="footer-link">Contact</a>
                     
                 
             </div>
@@ -429,6 +447,17 @@
 </script>
 
 
+
+<script>
+(function () {
+    var url   = encodeURIComponent(window.location.href);
+    var title = encodeURIComponent(document.title);
+    var li = document.getElementById('share-linkedin');
+    var em = document.getElementById('share-email');
+    if (li) li.href = 'https://www.linkedin.com/sharing/share-offsite/?url=' + url;
+    if (em) em.href = 'mailto:?subject=' + title + '&body=' + url;
+})();
+</script>
 
 
 </body>
