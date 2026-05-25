@@ -4,7 +4,7 @@ date: "04 Nov 2025"
 author: "Layla Kouara"
 teaser: "We brought researchers and community members together for two practical, conversational workshops. Here's what we did, and why we're excited to share the outcomes soon."
 reading_time: 3
-tags: [Inclusion, PPIE, Epilepsy, Parkinson's]
+tags: [Inclusion, PPIE, Epilepsy, Parkinson's, Events]
 
 hero:
   src: "data/news/images/shipshape-discussion.jpg"

@@ -1,45 +1,29 @@
 ---
-title: "Upcoming Workshop at Fatima Community Mosque"
-date: "30 Sep 2025"
-author: "M A Mohamed"
-teaser: "As part of our new collaboration with Fatima Community Mosque, we are hosting a community workshop on brain research to explore barriers, cultural considerations, and ways to make neurotechnology more inclusive."
-reading_time: 3
-tags: [ARIA, NeuroMod, Workshops, Inclusion, Community]
+title: "Upcoming: Brain Health Workshop at Fatima Community Mosque"
+date: "22 Sep 2025"
+author: "Layla Kouara"
+teaser: "On 30 September, we are hosting a brain health workshop at Fatima Community Mosque in Sheffield. The session is part of our work to understand how neurotechnology research can be made more inclusive and accessible for Muslim communities."
+reading_time: 2
+tags: [Community, Inclusion, Events]
 
 hero:
   src: "data/news/images/fatima-mosque-workshop.jpg"
-  alt: "Community workshop at Fatima Mosque"
-  caption: "The upcoming workshop took place at Fatima Community Mosque in Sheffield."
-
-references:
-  - authors: "University of Sheffield, Fatima Mosque, University of Leeds"
-    year: 2025
-    title: "Community Workshop Invitation"
-    source: "Internal Project Document"
+  alt: "Fatima Community Mosque in Sheffield"
+  caption: "The workshop will take place at Fatima Community Mosque, Sheffield."
 ---
 
-## New Collaboration with Fatima Community Mosque
+On **30 September 2025**, we are running a brain health workshop at Fatima Community Mosque in Sheffield. The session is a collaboration between the University of Sheffield and the University of Leeds, and has been organised in partnership with the mosque community.
 
-We are excited to announce a **new collaboration with Fatima Community Mosque** in Sheffield. Together with partners at the **University of Sheffield** and the **University of Leeds**, we are hosting a series of workshops designed to better understand how Muslim communities perceive brain research and how future studies can be made more **inclusive, respectful, and accessible**.
+### What We Are Hoping to Do
 
-The **first workshop took place on 30 September 2025**, at Fatima Mosque (105 Brunswick Road, Sheffield, S3 9LQ).
+Brain research has a diversity problem. Most neuroscience studies draw on a narrow slice of the population, and Muslim communities are significantly underrepresented. This matters because the findings and technologies coming out of this research may not work as well for everyone, and because the voices of many communities are absent from decisions about how this research is done.
 
-## What Happened
+We want to understand what Muslim community members think and feel about brain research, and what would make taking part in research feel more accessible and worthwhile. We are also interested in the broader cultural, religious, and practical considerations that shape how people engage with neurotechnology.
 
-The workshop included:
+The insights we gather will be used to develop guidance for researchers on how to design studies that are more inclusive and respectful of Muslim participants.
 
-- An **introduction to brain recording technologies** such as EEG and their use in health and research.
-- **Open discussions** on community views, experiences, and concerns about brain research.
-- Exploration of **cultural and religious considerations**, including modesty, gender, trust, and language.
-- **Focus group sessions** (men and women in separate groups with gender-matched facilitators) to explore trust, privacy, motivations, and practical barriers.
-- An **EEG demonstration**, where participants could see, touch, and try the headset to reduce concerns and increase familiarity.
+### Why This Matters
 
-All contributions will help shape a set of **community-informed guidelines** for researchers engaging with Muslim communities in the future.
+For neurotechnology to work for everyone, it needs to be developed and tested with everyone. Community input like this is essential to making sure that does not remain an aspiration.
 
-## Why This Matters
-
-This workshop was about **listening first**. By holding the sessions inside Fatima Community Mosque, we created a safe and familiar space where community members could share their views openly.
-
-The conversations will not stay within the room -- they will directly influence how future neurotechnology studies are designed and delivered. This ensures that research is not just done *for* communities, but also *with* them.
-
-Our hope is that this collaboration builds long-term trust and shows that community voices are valued at every stage of the research journey.
+We are grateful to Fatima Community Mosque for welcoming us and making this session possible. Stay tuned to see how the project progresses.

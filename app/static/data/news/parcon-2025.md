@@ -4,7 +4,7 @@ date: "04 Nov 2025"
 author: "Layla Kouara"
 teaser: "At ParCon (24-25 October, Birmingham), we met dozens of people living with Parkinson's. These conversations are already shaping our DBS research and next steps."
 reading_time: 3
-tags: [Conference, Parkinson's]
+tags: [Conference, Parkinson's, Events]
 
 hero:
   src: "data/news/images/parcon-stage.jpg"
