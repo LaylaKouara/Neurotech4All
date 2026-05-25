@@ -75,7 +75,7 @@ Partner logos can be external URLs (`"logo": "https://..."`) or local files (`"l
 | `app/app.py` | The Flask application that powers the site. Only edit this if you need to change how the site is built or how content is processed. |
 | `app/static/css/main.css` | All site styles. Only edit this if you want to change the look and feel of the site. |
 | `freeze.py` | The build script that generates the static site. |
-| `docs/` | Auto-generated output. Never edit these files directly — they are overwritten every time you run `python freeze.py`. |
+| `docs/` | Auto-generated output. Never edit these files directly. They are overwritten every time you run `python freeze.py`. |
 
 ---
 
@@ -112,3 +112,20 @@ This writes everything to `docs/`.
 ### 4. Publish
 
 Commit and push to GitHub. GitHub Pages serves the site automatically from the `docs/` folder.
+
+---
+
+## Troubleshooting
+
+**My changes are not showing up in the browser**
+If you are using the dev server, make sure you saved the file. Template and Python file changes reload automatically, but `site_config.json` and `team.json` require a server restart. If you are checking the live site, make sure you ran `python freeze.py` and pushed to GitHub.
+
+**A news post is not appearing on the site**
+Check that the filename does not contain spaces or special characters. Make sure the front matter at the top of the file is correctly formatted, with `---` on the first and last line of the metadata block. Check that the `date` field is filled in, as posts without a date may not sort correctly.
+
+**An image is not showing up**
+Check that the image filename in the Markdown file exactly matches the actual filename, including capitalisation and file extension (`.jpg` vs `.JPG`). Make sure the image is in `app/static/data/news/images/` and that you have run `python freeze.py` to copy it across to `docs/`.
+
+**The live site has not updated after pushing to GitHub**
+GitHub Pages can take a minute or two to rebuild. Check the Actions tab on the GitHub repository to see if the deployment is still running or has failed.
+
