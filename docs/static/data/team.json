@@ -1,11 +1,18 @@
 [
   {
-    "name": "Dr. Mahnaz Arvaneh",
+    "name": "Professor Mahnaz Arvaneh",
     "role": "Principal Investigator",
     "image": "images/mahnaz-arvaneh.png",
     "linkedin": "https://www.linkedin.com/in/mahnaz-arvaneh-88a16536/",
     "researchgate": "https://www.researchgate.net/profile/Mahnaz-Arvaneh-2",
     "scholar": "https://scholar.google.com.sg/citations?user=HBxF7nAAAAAJ&hl=en"
+  },
+  {
+    "name": "Dr. Jake Toth",
+    "role": "Postdoctoral Research Assistant",
+    "image": "images/jake-toth.jpg",
+    "linkedin": "https://www.linkedin.com/in/jake-toth-bci/",
+    "scholar":  "https://scholar.google.com/citations?user=xDF55S0AAAAJ&hl=en"
   },
   {
     "name": "Dr. Sabiniano Roman Regueros",
@@ -56,7 +63,7 @@
     "scholar": "https://scholar.google.com/citations?user=FAvt6EoAAAAJ&hl=en&oi=ao"
   },
   {
-    "name": "Mohamed A A Mohamed",
+    "name": "Dr. Mohamed A A Mohamed",
     "role": "Postdoctoral Research Assistant",
     "image": "images/mohamed-aa-mohamed.jpg",
     "linkedin": "https://www.linkedin.com/in/mohamed-a-a-mohamed-1b6a68150",
